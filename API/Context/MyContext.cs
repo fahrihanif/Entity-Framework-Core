@@ -15,6 +15,17 @@ namespace API.Context
 
         }
         public DbSet<Employee> Employees { get; set; }
+        public DbSet<University> Universities { get; set; }
+        public DbSet<Education> Educations { get; set; }
+        public DbSet<Profiling> Profilings { get; set; }
+        public DbSet<Account> Accounts { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            //modelBuilder.Entity<University>()
+            //    .HasMany(u => u.Educations)
+            //    .WithOne(e => e.University)
+            //    .IsRequired();
+        }
     }
 }

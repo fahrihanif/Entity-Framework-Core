@@ -12,13 +12,22 @@ namespace API.Models
     {
         [Key]
         public string NIK { get; set; }
+        [Required]
         public string FirstName { get; set; }
+        [Required]
         public string LastName { get; set; }
+        [Required]
         public string Phone { get; set; }
+        [Required]
         public DateTime BrithDate { get; set; }
+        [Required]
         public int Salary { get; set; }
+        [Required]
         public string Email { get; set; }
+        [Required]
         public Gender Gender { get; set; }
+
+        //Relation
     }
     public enum Gender
     {

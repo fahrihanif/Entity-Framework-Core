@@ -4,57 +4,22 @@ using API.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace API.Migrations
 {
     [DbContext(typeof(MyContext))]
-    partial class MyContextModelSnapshot : ModelSnapshot
+    [Migration("20220304100318_add-university-table")]
+    partial class adduniversitytable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.9")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("API.Models.Account", b =>
-                {
-                    b.Property<string>("NIK")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("NIK");
-
-                    b.ToTable("tb_tr_account");
-                });
-
-            modelBuilder.Entity("API.Models.Education", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Degree")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("GPA")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UniversityId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("tb_m_education");
-                });
 
             modelBuilder.Entity("API.Models.Employee", b =>
                 {
@@ -89,19 +54,6 @@ namespace API.Migrations
                     b.HasKey("NIK");
 
                     b.ToTable("tb_m_employee");
-                });
-
-            modelBuilder.Entity("API.Models.Profiling", b =>
-                {
-                    b.Property<string>("NIK")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("EducationId")
-                        .HasColumnType("int");
-
-                    b.HasKey("NIK");
-
-                    b.ToTable("tb_tr_profiling");
                 });
 
             modelBuilder.Entity("API.Models.University", b =>
