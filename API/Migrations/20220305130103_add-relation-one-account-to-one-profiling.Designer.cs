@@ -4,14 +4,16 @@ using API.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace API.Migrations
 {
     [DbContext(typeof(MyContext))]
-    partial class MyContextModelSnapshot : ModelSnapshot
+    [Migration("20220305130103_add-relation-one-account-to-one-profiling")]
+    partial class addrelationoneaccounttooneprofiling
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,8 +54,6 @@ namespace API.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UniversityId");
 
                     b.ToTable("tb_m_education");
                 });
@@ -103,8 +103,6 @@ namespace API.Migrations
 
                     b.HasKey("NIK");
 
-                    b.HasIndex("EducationId");
-
                     b.ToTable("tb_tr_profiling");
                 });
 
@@ -143,33 +141,6 @@ namespace API.Migrations
                     b.Navigation("Profiling");
                 });
 
-            modelBuilder.Entity("API.Models.Education", b =>
-                {
-                    b.HasOne("API.Models.University", "University")
-                        .WithMany("Educations")
-                        .HasForeignKey("UniversityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("University");
-                });
-
-            modelBuilder.Entity("API.Models.Profiling", b =>
-                {
-                    b.HasOne("API.Models.Education", "Education")
-                        .WithMany("Profilings")
-                        .HasForeignKey("EducationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Education");
-                });
-
-            modelBuilder.Entity("API.Models.Education", b =>
-                {
-                    b.Navigation("Profilings");
-                });
-
             modelBuilder.Entity("API.Models.Employee", b =>
                 {
                     b.Navigation("Account");
@@ -178,11 +149,6 @@ namespace API.Migrations
             modelBuilder.Entity("API.Models.Profiling", b =>
                 {
                     b.Navigation("Account");
-                });
-
-            modelBuilder.Entity("API.Models.University", b =>
-                {
-                    b.Navigation("Educations");
                 });
 #pragma warning restore 612, 618
         }

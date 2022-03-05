@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20220304103255_add-account-table")]
-    partial class addaccounttable
+    [Migration("20220305130003_add-relation-one-employee-to-one-account")]
+    partial class addrelationoneemployeetooneaccount
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -120,6 +120,22 @@ namespace API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("tb_m_university");
+                });
+
+            modelBuilder.Entity("API.Models.Account", b =>
+                {
+                    b.HasOne("API.Models.Employee", "Employee")
+                        .WithOne("Account")
+                        .HasForeignKey("API.Models.Account", "NIK")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+                });
+
+            modelBuilder.Entity("API.Models.Employee", b =>
+                {
+                    b.Navigation("Account");
                 });
 #pragma warning restore 612, 618
         }

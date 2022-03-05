@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20220304103039_add-profiling-table")]
-    partial class addprofilingtable
+    [Migration("20220305130350_add-relation-one-university-to-many-education")]
+    partial class addrelationoneuniversitytomanyeducation
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,20 @@ namespace API.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.9")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("API.Models.Account", b =>
+                {
+                    b.Property<string>("NIK")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("NIK");
+
+                    b.ToTable("tb_tr_account");
+                });
 
             modelBuilder.Entity("API.Models.Education", b =>
                 {
@@ -40,6 +54,8 @@ namespace API.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UniversityId");
 
                     b.ToTable("tb_m_education");
                 });
@@ -106,6 +122,51 @@ namespace API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("tb_m_university");
+                });
+
+            modelBuilder.Entity("API.Models.Account", b =>
+                {
+                    b.HasOne("API.Models.Employee", "Employee")
+                        .WithOne("Account")
+                        .HasForeignKey("API.Models.Account", "NIK")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("API.Models.Profiling", "Profiling")
+                        .WithOne("Account")
+                        .HasForeignKey("API.Models.Account", "NIK")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("Profiling");
+                });
+
+            modelBuilder.Entity("API.Models.Education", b =>
+                {
+                    b.HasOne("API.Models.University", "University")
+                        .WithMany("Educations")
+                        .HasForeignKey("UniversityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("University");
+                });
+
+            modelBuilder.Entity("API.Models.Employee", b =>
+                {
+                    b.Navigation("Account");
+                });
+
+            modelBuilder.Entity("API.Models.Profiling", b =>
+                {
+                    b.Navigation("Account");
+                });
+
+            modelBuilder.Entity("API.Models.University", b =>
+                {
+                    b.Navigation("Educations");
                 });
 #pragma warning restore 612, 618
         }

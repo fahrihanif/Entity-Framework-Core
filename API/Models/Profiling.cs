@@ -16,5 +16,7 @@ namespace API.Models
         public int EducationId { get; set; }
 
         //Relation
+        public Education Education { get; set; }
+        public Account Account { get; set; }
     }
 }

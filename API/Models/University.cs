@@ -16,6 +16,6 @@ namespace API.Models
         public string Name { get; set; }
 
         //Relation
-        //public ICollection<Education> Educations { get; set; }
+        public ICollection<Education> Educations { get; set; }
     }
 }

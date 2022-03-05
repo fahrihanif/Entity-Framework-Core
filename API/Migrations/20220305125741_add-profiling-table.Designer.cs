@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20220304100318_add-university-table")]
-    partial class adduniversitytable
+    [Migration("20220305125741_add-profiling-table")]
+    partial class addprofilingtable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,29 @@ namespace API.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.9")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("API.Models.Education", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Degree")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("GPA")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UniversityId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("tb_m_education");
+                });
 
             modelBuilder.Entity("API.Models.Employee", b =>
                 {
@@ -54,6 +77,19 @@ namespace API.Migrations
                     b.HasKey("NIK");
 
                     b.ToTable("tb_m_employee");
+                });
+
+            modelBuilder.Entity("API.Models.Profiling", b =>
+                {
+                    b.Property<string>("NIK")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("EducationId")
+                        .HasColumnType("int");
+
+                    b.HasKey("NIK");
+
+                    b.ToTable("tb_tr_profiling");
                 });
 
             modelBuilder.Entity("API.Models.University", b =>

@@ -16,5 +16,7 @@ namespace API.Models
         public string Password { get; set; }
 
         //Relation
+        public Employee Employee { get; set; }
+        public Profiling Profiling { get; set; }
     }
 }

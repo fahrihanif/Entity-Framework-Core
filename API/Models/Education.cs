@@ -20,6 +20,7 @@ namespace API.Models
         public int UniversityId { get; set; }
 
         //Relation
-        //public University University { get; set; }
+        public University University { get; set; }
+        public ICollection<Profiling> Profilings { get; set; }
     }
 }
