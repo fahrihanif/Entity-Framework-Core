@@ -24,7 +24,7 @@ namespace API.Repository
             var check = context.Employees.Find(NIK);
             if (check != null)
             {
-                context.Remove(context.Employees.Find(NIK));
+                context.Employees.Remove(check);
                 var result = context.SaveChanges();
                 return result;
             }
@@ -76,7 +76,7 @@ namespace API.Repository
         private bool Duplicate(Employee employee)
         {
             var duplicate = context.Employees.Where(s => s.Email == employee.Email || s.Phone == employee.Phone).SingleOrDefault();
-            
+
             if (duplicate == null)
             {
                 return true;
@@ -94,6 +94,6 @@ namespace API.Repository
                 return true;
             }
             return false;
-        } 
+        }
     }
 }

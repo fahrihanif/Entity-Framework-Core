@@ -10,13 +10,12 @@ using System.Threading.Tasks;
 
 namespace API.Controllers
 {
-    [Route("api/Employees")]
+    [Route("api/Universities")]
     [ApiController]
-    public class EmployeesController : BaseController<Employee, EmployeeRepository, string>
+    public class UniversitiesController : BaseController<University, UniversityRepository, int>
     {
-        public EmployeesController(EmployeeRepository repository) : base(repository)
+        public UniversitiesController(UniversityRepository repository) : base(repository)
         {
-
         }
     }
 }
