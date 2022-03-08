@@ -29,6 +29,11 @@ namespace API.Repository.Data
                                            })
                                            .SingleOrDefault();
 
+            if (account == null)
+            {
+                return 0;
+            }
+
             if (change.OTP == account.OTP)
             {
                 if (account.IsUsed == false)
@@ -47,15 +52,15 @@ namespace API.Repository.Data
                             };
                             context.Entry(acc).State = EntityState.Modified;
                             context.SaveChanges();
-                            return acc.OTP;
+                            return 5;
                         }
-                        return 3;
+                        return 4;
                     }
-                    return 2;
+                    return 3;
                 }
-                return 1;
+                return 2;
             }
-            return 0;
+            return 1;
         }
 
         public int ForgotPassword(String email)
