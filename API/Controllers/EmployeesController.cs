@@ -20,11 +20,11 @@ namespace API.Controllers
             this.repository = repository;
         }
 
-        public override ActionResult Update(Employee entity, string key)
+        public override ActionResult Update(Employee entity)
         {
             try
             {
-                var update = repository.Update(entity, key);
+                var update = repository.Update(entity);
                 return update == 0
                     ? NotFound((new { msg = "Data Gagal Diubah Email dan Phone Tidak Boleh Sama Dengan Employee Lain" }))
                     : (ActionResult)Ok(new { msg = "Data Berhasil Diubah" });

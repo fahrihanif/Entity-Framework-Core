@@ -16,11 +16,11 @@ namespace API.Repository.Data
             context = myContext;
         }
 
-        public override int Update(Employee entity, string key)
+        public override int Update(Employee entity)
         {
             if (CheckEmailPhone(entity) == true)
             {
-                return base.Update(entity, key);
+                return base.Update(entity);
             }
             return 0;
         }

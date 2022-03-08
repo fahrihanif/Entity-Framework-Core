@@ -2,7 +2,6 @@
 using API.Models;
 using API.Repository.Data;
 using API.ViewModel;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -16,9 +15,47 @@ namespace API.Controllers
     public class AccountsController : BaseController<Account, AccountRepository, string>
     {
         private readonly AccountRepository repository;
-        public AccountsController(AccountRepository repository) : base(repository)
+        //private readonly IEmailService emailService;
+        public AccountsController(AccountRepository repository/*, IEmailService emailService*/) : base(repository)
         {
+            //this.emailService = emailService;
             this.repository = repository;
+        }
+
+        [HttpPut("ChangePassword")]
+        [Route("")]
+        public ActionResult ChangePassword([FromHeader]ChangePasswordVM change)
+        {
+            var put = repository.ChangePassord(change);
+
+            return put switch
+            {
+                0 => NotFound(new { msg = "OTP Salah!" }),
+                1 => NotFound(new { msg = "OTP Sudah Pernah Digunakan!" }),
+                2 => NotFound(new { msg = "OTP Sudah Tidak Berlaku" }),
+                3 => NotFound(new { msg = "Password Tidak Sesuai" }),
+                _ => Ok(new { msg = "Password Berhasil Diubah" })
+            };
+                
+        }
+
+        [HttpPut("ForgotPassword")]
+        [Route("")]
+        public ActionResult ForgotPassword(string email)
+        {
+            try
+            {
+                var put = repository.ForgotPassword(email);
+                if (put == 0)
+                {
+                    return NotFound(new { msg = "Akun Tidak Ditemukan" });
+                }
+                return Ok(new { msg = "OTP Berhasil Dikirim, Periksa Email Anda!" });
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { msg = e });
+            }
         }
 
         [HttpGet("Login")]

@@ -1,6 +1,9 @@
 ﻿using API.Context;
 using API.Models;
 using API.ViewModel;
+using Microsoft.EntityFrameworkCore;
+using MimeKit;
+using MailKit.Net.Smtp;
 using System;
 using System.Linq;
 
@@ -14,10 +17,88 @@ namespace API.Repository.Data
             context = myContext;
         }
 
+        public int ChangePassord(ChangePasswordVM change)
+        {
+            var account = context.Employees.Where(e => e.Email == change.Email)
+                                           .Join(context.Accounts, a => a.NIK, e => e.NIK, (e, a) => new {
+                                               NIK = a.NIK,
+                                               Password = a.Password,
+                                               OTP = a.OTP,
+                                               ExpiredToken = a.ExpiredToken,
+                                               IsUsed = a.IsUsed
+                                           })
+                                           .SingleOrDefault();
+
+            if (change.OTP == account.OTP)
+            {
+                if (account.IsUsed == false)
+                {
+                    if (account.ExpiredToken > DateTime.Now)
+                    {
+                        if (change.NewPassword == change.NewPassword)
+                        {
+                            Account acc = new Account
+                            {
+                                NIK = account.NIK,
+                                Password = change.NewPassword,
+                                OTP = account.OTP,
+                                ExpiredToken = account.ExpiredToken,
+                                IsUsed = true
+                            };
+                            context.Entry(acc).State = EntityState.Modified;
+                            context.SaveChanges();
+                            return acc.OTP;
+                        }
+                        return 3;
+                    }
+                    return 2;
+                }
+                return 1;
+            }
+            return 0;
+        }
+
+        public int ForgotPassword(String email)
+        {
+            var account = context.Employees.Where(e => e.Email == email)
+                                           .Join(context.Accounts, a => a.NIK, e => e.NIK, (e, a) => new {
+                                                    NIK = a.NIK,
+                                                    Password = a.Password})
+                                           .SingleOrDefault();
+
+            if (account != null)
+            {
+                Account acc = new Account
+                {
+                    NIK = account.NIK,
+                    Password = account.Password,
+                    OTP = new Random().Next(100000, 999999),
+                    ExpiredToken = DateTime.Now.AddMinutes(5),
+                    IsUsed = false
+                };
+                Update(acc);
+
+                var message = new MimeMessage();
+                message.From.Add(new MailboxAddress("Forgot Password EF Core","kaibee3333@gmail.com"));
+                message.To.Add(MailboxAddress.Parse(email));
+                message.Subject = $"Change Password OTP ({acc.OTP})";
+                message.Body = new TextPart("Plain") { Text = $"Kode OTP : {acc.OTP}"};
+
+                SmtpClient smtp = new SmtpClient();
+                smtp.Connect("smtp.gmail.com", 465, true);
+                smtp.Authenticate("kaibee3333@gmail.com", "Kaibe333");
+                smtp.Send(message);
+                smtp.Disconnect(true);
+                smtp.Dispose();
+
+                return 1;
+            }
+            return 0;
+        }
+
         public int Login(LoginVM login)
         {
             var empCheck = context.Employees.SingleOrDefault(e => e.Email == login.Email);
-
             if (empCheck != null)
             {
                 var accCheck = context.Accounts.SingleOrDefault(a => a.NIK == empCheck.NIK && a.Password == login.Password);
