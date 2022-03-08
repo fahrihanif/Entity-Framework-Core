@@ -16,8 +16,8 @@ namespace API.Repository.Data
 
         public int Register(RegisterVM register)
         {
-            var empCount = context.Employees.Last().NIK == null ? 1 : Convert.ToInt32(context.Employees.Last().NIK) + 1;
-            //var eduCheck = context.Educations.Where(e => e.GPA == register.GPA && e.Degree == register.Degree && e.UniversityId == register.UniversityId).SingleOrDefault();
+            var empCount = context.Employees.Count() + 1;
+            var eduCheck = context.Educations.SingleOrDefault(e => e.GPA == register.GPA && e.Degree == register.Degree && e.UniversityId == register.UniversityId);
             var Year = DateTime.Now.Year;
             register.NIK = Year + "00" + empCount.ToString();
 
@@ -46,10 +46,22 @@ namespace API.Repository.Data
                 UniversityId = register.UniversityId
             };
 
-            Profiling pro = new Profiling {
-                NIK = emp.NIK,
-                Education = edu
-            };
+            Profiling pro;
+            if (eduCheck != null)
+            {
+                pro = new Profiling
+                {
+                    NIK = emp.NIK,
+                    Education = eduCheck
+                };
+            }else
+            {
+                pro = new Profiling
+                {
+                    NIK = emp.NIK,
+                    Education = edu
+                };
+            }
 
             Console.WriteLine(register.BirthDate);
 
