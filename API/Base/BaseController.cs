@@ -73,7 +73,7 @@ namespace API.Base
 
         //Update
         [HttpPut]
-        public ActionResult Update(Entity entity, Key key)
+        public virtual ActionResult Update(Entity entity, Key key)
         {
             try
             {

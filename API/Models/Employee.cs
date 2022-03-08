@@ -19,7 +19,7 @@ namespace API.Models
         [Required]
         public string Phone { get; set; }
         [Required]
-        public DateTime BrithDate { get; set; }
+        public DateTime BirthDate { get; set; }
         [Required]
         public int Salary { get; set; }
         [Required]

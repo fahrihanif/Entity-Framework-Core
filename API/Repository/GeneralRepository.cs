@@ -50,7 +50,7 @@ namespace API.Repository
             return result;
         }
 
-        public int Update(Entity entity, Key key)
+        public virtual int Update(Entity entity, Key key)
         {
             myContext.Entry(entity).State = EntityState.Modified;
             var result = myContext.SaveChanges();

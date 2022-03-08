@@ -16,7 +16,8 @@ namespace API.Repository.Data
 
         public int Register(RegisterVM register)
         {
-            var empCount = Get().Count() + 1;
+            var empCount = context.Employees.Last().NIK == null ? 1 : Convert.ToInt32(context.Employees.Last().NIK) + 1;
+            //var eduCheck = context.Educations.Where(e => e.GPA == register.GPA && e.Degree == register.Degree && e.UniversityId == register.UniversityId).SingleOrDefault();
             var Year = DateTime.Now.Year;
             register.NIK = Year + "00" + empCount.ToString();
 
@@ -25,7 +26,7 @@ namespace API.Repository.Data
                 NIK = register.NIK,
                 FirstName = register.FirstName,
                 LastName = register.LastName,
-                BrithDate = register.BirthDate,
+                BirthDate = register.BirthDate,
                 Gender = register.Gender,
                 Phone = register.Phone,
                 Salary = register.Salary,
@@ -49,6 +50,8 @@ namespace API.Repository.Data
                 NIK = emp.NIK,
                 Education = edu
             };
+
+            Console.WriteLine(register.BirthDate);
 
             if (CheckEmailPhone(register) == true)
             {
