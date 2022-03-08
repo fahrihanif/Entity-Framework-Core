@@ -14,6 +14,22 @@ namespace API.Repository.Data
             context = myContext;
         }
 
+        public int Login(LoginVM login)
+        {
+            var empCheck = context.Employees.SingleOrDefault(e => e.Email == login.Email);
+
+            if (empCheck != null)
+            {
+                var accCheck = context.Accounts.SingleOrDefault(a => a.NIK == empCheck.NIK && a.Password == login.Password);
+                if (accCheck != null)
+                {
+                    return 2;
+                }
+                return 1;
+            }
+            return 0;
+        }
+
         public int Register(RegisterVM register)
         {
             var empCount = context.Employees.Count() + 1;
@@ -61,6 +77,7 @@ namespace API.Repository.Data
                     NIK = emp.NIK,
                     Education = edu
                 };
+                context.Educations.Add(edu);
             }
 
             Console.WriteLine(register.BirthDate);
@@ -68,7 +85,6 @@ namespace API.Repository.Data
             if (CheckEmailPhone(register) == true)
             {
                 context.Employees.Add(emp);
-                context.Educations.Add(edu);
                 context.Accounts.Add(acc);
                 context.Profilings.Add(pro);
                 var result = context.SaveChanges();

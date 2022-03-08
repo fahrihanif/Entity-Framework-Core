@@ -21,6 +21,25 @@ namespace API.Controllers
             this.repository = repository;
         }
 
+        [HttpGet("Login")]
+        public ActionResult Login(LoginVM login)
+        {
+            try
+            {
+                var get = repository.Login(login);
+                return get switch
+                {
+                    0 => NotFound(new { msg = "Akun Tidak Ditemukan" }),
+                    1 => NotFound(new { msg = "Password Salah" }),
+                    _ => Ok(new { msg = "Login Berhasil" })
+                };
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { msg = e });
+            }
+        }
+
         [HttpPost("Register")]
         public ActionResult Register(RegisterVM register)
         {
