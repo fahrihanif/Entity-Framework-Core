@@ -48,7 +48,6 @@ D:\Kuliah\Project\VisualStudio\API\API\bin\Debug\netcoreapp3.1\runtimes\win-x86\
 D:\Kuliah\Project\VisualStudio\API\API\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.pdb
 D:\Kuliah\Project\VisualStudio\API\API\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
 D:\Kuliah\Project\VisualStudio\API\API\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
-D:\Kuliah\Project\VisualStudio\API\API\obj\Debug\netcoreapp3.1\API.csproj.AssemblyReference.cache
 D:\Kuliah\Project\VisualStudio\API\API\obj\Debug\netcoreapp3.1\API.GeneratedMSBuildEditorConfig.editorconfig
 D:\Kuliah\Project\VisualStudio\API\API\obj\Debug\netcoreapp3.1\API.AssemblyInfoInputs.cache
 D:\Kuliah\Project\VisualStudio\API\API\obj\Debug\netcoreapp3.1\API.AssemblyInfo.cs
@@ -62,3 +61,11 @@ D:\Kuliah\Project\VisualStudio\API\API\obj\Debug\netcoreapp3.1\API.csproj.CopyCo
 D:\Kuliah\Project\VisualStudio\API\API\obj\Debug\netcoreapp3.1\API.dll
 D:\Kuliah\Project\VisualStudio\API\API\obj\Debug\netcoreapp3.1\API.pdb
 D:\Kuliah\Project\VisualStudio\API\API\obj\Debug\netcoreapp3.1\API.genruntimeconfig.cache
+D:\Kuliah\Project\VisualStudio\API\API\bin\Debug\netcoreapp3.1\MailKit.dll
+D:\Kuliah\Project\VisualStudio\API\API\bin\Debug\netcoreapp3.1\MimeKit.dll
+D:\Kuliah\Project\VisualStudio\API\API\bin\Debug\netcoreapp3.1\NETCore.MailKit.dll
+D:\Kuliah\Project\VisualStudio\API\API\bin\Debug\netcoreapp3.1\BouncyCastle.Crypto.dll
+D:\Kuliah\Project\VisualStudio\API\API\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.JsonPatch.dll
+D:\Kuliah\Project\VisualStudio\API\API\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+D:\Kuliah\Project\VisualStudio\API\API\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll
+D:\Kuliah\Project\VisualStudio\API\API\obj\Debug\netcoreapp3.1\API.csproj.AssemblyReference.cache

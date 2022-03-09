@@ -20,6 +20,25 @@ namespace API.Controllers
             this.repository = repository;
         }
 
+        //Get Data
+        [HttpGet("Master")]
+        public ActionResult GetAllMaster()
+        {
+            try
+            {
+                var get = repository.MasterEmployeeData();
+                return get == null
+                    ? NotFound(new { msg = "Data Tidak Ada" })
+                    : (ActionResult)Ok(repository.MasterEmployeeData());
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { msg = e });
+            }
+        }
+
+        //Update
+        [HttpPut]
         public override ActionResult Update(Employee entity)
         {
             try

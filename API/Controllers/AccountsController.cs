@@ -15,27 +15,32 @@ namespace API.Controllers
     public class AccountsController : BaseController<Account, AccountRepository, string>
     {
         private readonly AccountRepository repository;
-        //private readonly IEmailService emailService;
-        public AccountsController(AccountRepository repository/*, IEmailService emailService*/) : base(repository)
+        public AccountsController(AccountRepository repository) : base(repository)
         {
-            //this.emailService = emailService;
             this.repository = repository;
         }
 
         [HttpPut("ChangePassword")]
-        [Route("")]
-        public ActionResult ChangePassword([FromHeader]ChangePasswordVM change)
+        public ActionResult ChangePassword(ChangePasswordVM change)
         {
-            var put = repository.ChangePassord(change);
-
-            return put switch
+            try
             {
-                0 => NotFound(new { msg = "OTP Salah!" }),
-                1 => NotFound(new { msg = "OTP Sudah Pernah Digunakan!" }),
-                2 => NotFound(new { msg = "OTP Sudah Tidak Berlaku" }),
-                3 => NotFound(new { msg = "Password Tidak Sesuai" }),
-                _ => Ok(new { msg = "Password Berhasil Diubah" })
-            };
+                var put = repository.ChangePassord(change);
+                return put switch
+                {
+                    0 => NotFound(new { msg = "Akun Tidak Ditemukan!" }),
+                    1 => NotFound(new { msg = "OTP Salah!" }),
+                    2 => NotFound(new { msg = "OTP Sudah Pernah Digunakan!" }),
+                    3 => NotFound(new { msg = "OTP Sudah Tidak Berlaku" }),
+                    4 => NotFound(new { msg = "Password Tidak Sesuai" }),
+                    _ => Ok(new { msg = "Password Berhasil Diubah" })
+                };
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(new { msg = e });
+            }
                 
         }
 
@@ -46,11 +51,9 @@ namespace API.Controllers
             try
             {
                 var put = repository.ForgotPassword(email);
-                if (put == 0)
-                {
-                    return NotFound(new { msg = "Akun Tidak Ditemukan" });
-                }
-                return Ok(new { msg = "OTP Berhasil Dikirim, Periksa Email Anda!" });
+                return put == 0 
+                    ? NotFound(new { msg = "Akun Tidak Ditemukan" }) 
+                    : (ActionResult)Ok(new { msg = "OTP Berhasil Dikirim, Periksa Email Anda!" });
             }
             catch (Exception e)
             {

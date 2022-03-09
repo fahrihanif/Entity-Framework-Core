@@ -20,56 +20,57 @@ namespace API.Repository.Data
         public int ChangePassord(ChangePasswordVM change)
         {
             var account = context.Employees.Where(e => e.Email == change.Email)
-                                           .Join(context.Accounts, a => a.NIK, e => e.NIK, (e, a) => new {
-                                               NIK = a.NIK,
-                                               Password = a.Password,
-                                               OTP = a.OTP,
-                                               ExpiredToken = a.ExpiredToken,
-                                               IsUsed = a.IsUsed
-                                           })
-                                           .SingleOrDefault();
-
-            if (account == null)
-            {
-                return 0;
-            }
-
-            if (change.OTP == account.OTP)
-            {
-                if (account.IsUsed == false)
+                .Join(context.Accounts, a => a.NIK, e => e.NIK,
+                (e, a) => new
                 {
-                    if (account.ExpiredToken > DateTime.Now)
+                    NIK = a.NIK,
+                    Email = e.Email,
+                    Password = a.Password,
+                    OTP = a.OTP,
+                    ExpiredToken = a.ExpiredToken,
+                    IsUsed = a.IsUsed
+                }).SingleOrDefault();
+
+            if (account != null)
+            {
+                if (change.OTP == account.OTP)
+                {
+                    if (account.IsUsed == false)
                     {
-                        if (change.NewPassword == change.NewPassword)
+                        if (account.ExpiredToken > DateTime.Now)
                         {
-                            Account acc = new Account
+                            if (change.NewPassword == change.ConfirmPassword)
                             {
-                                NIK = account.NIK,
-                                Password = change.NewPassword,
-                                OTP = account.OTP,
-                                ExpiredToken = account.ExpiredToken,
-                                IsUsed = true
-                            };
-                            context.Entry(acc).State = EntityState.Modified;
-                            context.SaveChanges();
-                            return 5;
+                                base.Update(new Account
+                                {
+                                    NIK = account.NIK,
+                                    Password = change.NewPassword,
+                                    OTP = account.OTP,
+                                    ExpiredToken = account.ExpiredToken,
+                                    IsUsed = true
+                                });
+                                return 5;
+                            }
+                            return 4;
                         }
-                        return 4;
+                        return 3;
                     }
-                    return 3;
+                    return 2;
                 }
-                return 2;
+                return 1;
             }
-            return 1;
+            return 0;
         }
 
         public int ForgotPassword(String email)
         {
-            var account = context.Employees.Where(e => e.Email == email)
-                                           .Join(context.Accounts, a => a.NIK, e => e.NIK, (e, a) => new {
-                                                    NIK = a.NIK,
-                                                    Password = a.Password})
-                                           .SingleOrDefault();
+            var account = context.Employees.Join
+                (context.Accounts, a => a.NIK, e => e.NIK, 
+                (e, a) => new {
+                    NIK = a.NIK,
+                    Email = e.Email,
+                    Password = a.Password
+            }).SingleOrDefault(e => e.Email == email);
 
             if (account != null)
             {
@@ -94,7 +95,6 @@ namespace API.Repository.Data
                 smtp.Authenticate("kaibee3333@gmail.com", "Kaibe333");
                 smtp.Send(message);
                 smtp.Disconnect(true);
-                smtp.Dispose();
 
                 return 1;
             }
@@ -103,15 +103,18 @@ namespace API.Repository.Data
 
         public int Login(LoginVM login)
         {
-            var empCheck = context.Employees.SingleOrDefault(e => e.Email == login.Email);
-            if (empCheck != null)
+            var check = context.Employees.Join(context.Accounts, a => a.NIK, e => e.NIK, (e, a) => new
             {
-                var accCheck = context.Accounts.SingleOrDefault(a => a.NIK == empCheck.NIK && a.Password == login.Password);
-                if (accCheck != null)
-                {
-                    return 2;
-                }
-                return 1;
+                NIK = a.NIK,
+                Email = e.Email,
+                Password = a.Password
+            }).SingleOrDefault(e => e.Email == login.Email);
+
+            if (check != null)
+            {
+                return check.Password == login.Password
+                    ? 2
+                    : 1;
             }
             return 0;
         }
@@ -119,62 +122,47 @@ namespace API.Repository.Data
         public int Register(RegisterVM register)
         {
             var empCount = context.Employees.Count() + 1;
-            var eduCheck = context.Educations.SingleOrDefault(e => e.GPA == register.GPA && e.Degree == register.Degree && e.UniversityId == register.UniversityId);
             var Year = DateTime.Now.Year;
             register.NIK = Year + "00" + empCount.ToString();
 
-            Employee emp = new Employee
+            if (CheckEmailPhone(register))
             {
-                NIK = register.NIK,
-                FirstName = register.FirstName,
-                LastName = register.LastName,
-                BirthDate = register.BirthDate,
-                Gender = register.Gender,
-                Phone = register.Phone,
-                Salary = register.Salary,
-                Email = register.Email
-            };
-
-            Account acc = new Account
-            {
-                NIK = emp.NIK,
-                Password = register.Password
-            };
-
-            Education edu = new Education
-            {
-                GPA = register.GPA,
-                Degree = register.Degree,
-                UniversityId = register.UniversityId
-            };
-
-            Profiling pro;
-            if (eduCheck != null)
-            {
-                pro = new Profiling
+                Employee emp = new Employee
                 {
-                    NIK = emp.NIK,
-                    Education = eduCheck
+                    NIK = register.NIK,
+                    FirstName = register.FirstName,
+                    LastName = register.LastName,
+                    BirthDate = register.BirthDate,
+                    Gender = register.Gender,
+                    Phone = register.Phone,
+                    Salary = register.Salary,
+                    Email = register.Email
                 };
-            }else
-            {
-                pro = new Profiling
+                context.Employees.Add(emp);
+
+                context.Accounts.Add(new Account
                 {
                     NIK = emp.NIK,
-                    Education = edu
+                    Password = register.Password
+                });
+
+                Education edu = new Education
+                {
+                    GPA = register.GPA,
+                    Degree = register.Degree,
+                    UniversityId = register.UniversityId
                 };
                 context.Educations.Add(edu);
-            }
+                context.SaveChanges();
 
-            Console.WriteLine(register.BirthDate);
+                context.Profilings.Add(new Profiling
+                {
+                    NIK = emp.NIK,
+                    EducationId = edu.Id
+                });
+                context.SaveChanges();
 
-            if (CheckEmailPhone(register) == true)
-            {
-                context.Employees.Add(emp);
-                context.Accounts.Add(acc);
-                context.Profilings.Add(pro);
-                var result = context.SaveChanges();
-                return result;
+                return 1;
             }
             return 0;
         }
@@ -183,11 +171,7 @@ namespace API.Repository.Data
         {
             var check = context.Employees.Where(s => s.Email == register.Email || s.Phone == register.Phone).SingleOrDefault();
 
-            if (check == null)
-            {
-                return true;
-            }
-            return false;
+            return check == null;
         }
     }
 }

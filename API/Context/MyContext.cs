@@ -36,7 +36,7 @@ namespace API.Context
             modelBuilder.Entity<Account>()
                 .HasOne(p => p.Profiling)
                 .WithOne(e => e.Account)
-                .HasForeignKey<Account>(p => p.NIK);
+                .HasForeignKey<Profiling>(e => e.NIK);
         }
     }
 }
