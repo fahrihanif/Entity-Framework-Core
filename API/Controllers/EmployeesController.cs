@@ -33,7 +33,7 @@ namespace API.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(new { msg = e });
+                return BadRequest(e);
             }
         }
 
@@ -50,7 +50,7 @@ namespace API.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(new { msg = e });
+                return BadRequest(e);
             }
         }
     }

@@ -31,7 +31,7 @@ namespace API.Base
             }
             catch (Exception e)
             {
-                return BadRequest(new { msg = e });
+                return BadRequest(e);
             }
         }
 
@@ -49,7 +49,7 @@ namespace API.Base
             }
             catch (Exception e)
             {
-                return BadRequest(new { msg = e });
+                return BadRequest(e);
             }
 
         }
@@ -67,7 +67,7 @@ namespace API.Base
             }
             catch (Exception e)
             {
-                return BadRequest(new { msg = e });
+                return BadRequest(e);
             }
         }
 
@@ -84,7 +84,7 @@ namespace API.Base
             }
             catch (Exception e)
             {
-                return BadRequest(new { msg = e });
+                return BadRequest(e);
             }
         }
 
@@ -102,7 +102,7 @@ namespace API.Base
             }
             catch (Exception e)
             {
-                return BadRequest(new { msg = e });
+                return BadRequest(e);
             }
         }
     }
