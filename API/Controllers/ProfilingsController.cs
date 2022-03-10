@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace API.Controllers
 {
+    //This class to implement BaseController in Profiling
     [Route("api/Profilings")]
     [ApiController]
     public class ProfilingsController : BaseController<Profiling, ProfilingRepository, string>

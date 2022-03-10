@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 
 namespace API.Repository.Interface
 {
+
+    //This method get called by GeneralRepository to implement Generic Repository Pattern
     public interface IRepository<Entity, Key> where Entity : class
     {
         IEnumerable<Entity> Get();

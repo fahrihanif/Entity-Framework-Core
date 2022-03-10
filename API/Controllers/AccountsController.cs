@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace API.Controllers
 {
+    //This class to implement BaseController in Account
     [Route("api/Accounts")]
     [ApiController]
     public class AccountsController : BaseController<Account, AccountRepository, string>
@@ -20,6 +21,7 @@ namespace API.Controllers
             this.repository = repository;
         }
 
+        //Get all return from method EmployeeRepostory ChangePassword and send result to postman
         [HttpPut("ChangePassword")]
         public ActionResult ChangePassword(ChangePasswordVM change)
         {
@@ -38,12 +40,12 @@ namespace API.Controllers
             }
             catch (Exception e)
             {
-
                 return BadRequest(e);
             }
                 
         }
 
+        //Get all return from method EmployeeRepostory ForgotPassword and send result to postman
         [HttpPut("ForgotPassword")]
         [Route("")]
         public ActionResult ForgotPassword(string email)
@@ -61,6 +63,7 @@ namespace API.Controllers
             }
         }
 
+        //Get all return from method EmployeeRepostory Login and send result to postman
         [HttpGet("Login")]
         public ActionResult Login(LoginVM login)
         {
@@ -80,6 +83,7 @@ namespace API.Controllers
             }
         }
 
+        //Get all return from method EmployeeRepostory Register and send result to postman
         [HttpPost("Register")]
         public ActionResult Register(RegisterVM register)
         {

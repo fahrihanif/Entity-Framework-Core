@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace API.Controllers
 {
+    //This class to implement BaseController in Employee
     [Route("api/Employees")]
     [ApiController]
     public class EmployeesController : BaseController<Employee, EmployeeRepository, string>

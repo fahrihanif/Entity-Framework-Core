@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace API.Repository.Data
 {
+    //This class to implement GeneralRepository in Employee
     public class EmployeeRepository : GeneralRepository<MyContext, Employee, string>
     {
         private readonly MyContext context;
@@ -18,21 +19,24 @@ namespace API.Repository.Data
             context = myContext;
         }
 
+        //This method to get all Entities
         public IEnumerable MasterEmployeeData()
         {
-            var MasterEmployee = context.Employees
-                .Join(context.Accounts,e => e.NIK,a => a.NIK,
+
+            return context.Employees
+                .Join(context.Accounts, e => e.NIK, a => a.NIK,
                 (e, a) => new { e, a })
                 .Join(context.Profilings, ea => ea.a.NIK, p => p.NIK,
                 (ea, p) => new { p, ea })
-                .Join(context.Educations, eap => eap.p.EducationId, e => e.Id, 
+                .Join(context.Educations, eap => eap.p.EducationId, e => e.Id,
                 (eap, e) => new { e, eap })
-                .Join( context.Universities, eape => eape.e.UniversityId,u => u.Id,
-                (eape, u) => new {
+                .Join(context.Universities, eape => eape.e.UniversityId, u => u.Id,
+                (eape, u) => new
+                {
                     NIK = eape.eap.ea.e.NIK,
-                    FullName = (eape.eap.ea.e.FirstName+" "+ eape.eap.ea.e.LastName),
+                    FullName = (eape.eap.ea.e.FirstName + " " + eape.eap.ea.e.LastName),
                     Phone = eape.eap.ea.e.Phone,
-                    Gender = eape.eap.ea.e.Gender,
+                    Gender = eape.eap.ea.e.Gender.ToString(),
                     Email = eape.eap.ea.e.Email,
                     BithDate = eape.eap.ea.e.BirthDate,
                     Salary = eape.eap.ea.e.Salary,
@@ -41,10 +45,9 @@ namespace API.Repository.Data
                     Degree = eape.e.Degree,
                     UniversityName = u.Name
                 });
-
-            return MasterEmployee;
         }
 
+        //override method update in GeneralRepository to check entity before update
         public override int Update(Employee entity)
         {
             return CheckEmailPhone(entity) 
@@ -52,6 +55,7 @@ namespace API.Repository.Data
                 : 0;
         }
 
+        //This method used to check are email and phone is have been used or not
         private bool CheckEmailPhone(Employee employee)
         {
             var nik = context.Employees.Where(s => !(s.NIK == employee.NIK)).ToList();

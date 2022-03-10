@@ -35,9 +35,8 @@ namespace API.Base
             }
         }
 
-        //Get Data with parameter
+        //Get Data with parameter primary key
         [HttpGet("Search")]
-        [Route("")]
         public ActionResult GetById(Key id)
         {
             try
@@ -54,7 +53,7 @@ namespace API.Base
 
         }
 
-        //Insert
+        //Insert data to entity
         [HttpPost]
         public ActionResult Post(Entity entity)
         {
@@ -71,7 +70,7 @@ namespace API.Base
             }
         }
 
-        //Update
+        //Update data from existing row in entity
         [HttpPut]
         public virtual ActionResult Update(Entity entity)
         {
@@ -88,9 +87,8 @@ namespace API.Base
             }
         }
 
-        //Delete
+        //Delete data from row in entity by primary key
         [HttpDelete("Delete")]
-        [Route("")]
         public ActionResult Delete(Key id)
         {
             try

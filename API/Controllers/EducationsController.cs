@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace API.Controllers
 {
+    //This class to implement BaseController in Education
     [Route("api/Educations")]
     [ApiController]
     public class EducationsController : BaseController<Education, EducationRepository, int>

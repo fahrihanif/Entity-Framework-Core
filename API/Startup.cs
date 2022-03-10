@@ -26,12 +26,19 @@ namespace API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            //Adds a scoped service of the type specified in Repository.Data
             services.AddScoped<EmployeeRepository>();
             services.AddScoped<AccountRepository>();
             services.AddScoped<ProfilingRepository>();
             services.AddScoped<EducationRepository>();
             services.AddScoped<UniversityRepository>();
+
+            //This is for configures MyContext to connect to a SSMS
+            //"API" has created in appsetings.json
             services.AddDbContext<MyContext>(options => options.UseSqlServer(Configuration.GetConnectionString("API")));
+
+            //This is for handled reference loop eror to Json format
             services.AddControllersWithViews().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
         }
 

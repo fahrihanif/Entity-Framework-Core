@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "QR7TQJfQBQ12uPlqdR6mC9ePeygMqpN7srwnFEJ7JEP3plK0aV/2vHjtoivIdYVit/8v4/PDCWNxn/UwbjIzMw==",
+  "dgSpecHash": "yxJrGY3n540GewuO17LUTp9B+0pQvPwCZ1bC02ZlQU9W7sVEbr4Ye3sV0Jk/VfWjrB7I/gLxfonLvfprmhVkGA==",
   "success": true,
   "projectFilePath": "D:\\Kuliah\\Project\\VisualStudio\\API\\API\\API.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\fahri\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\fahri\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\fahri\\.nuget\\packages\\mailkit\\2.6.0\\mailkit.2.6.0.nupkg.sha512",
     "C:\\Users\\fahri\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\3.0.0\\microsoft.aspnetcore.jsonpatch.3.0.0.nupkg.sha512",
