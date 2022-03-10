@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.Text.Json.Serialization;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -20,7 +21,9 @@ namespace API.Models
         public int UniversityId { get; set; }
 
         //Relation
-        public University University { get; set; }
-        public ICollection<Profiling> Profilings { get; set; }
+        [JsonIgnore]
+        public virtual University University { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<Profiling> Profilings { get; set; }
     }
 }

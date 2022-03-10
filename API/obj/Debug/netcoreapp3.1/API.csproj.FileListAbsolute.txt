@@ -70,3 +70,5 @@ D:\Kuliah\Project\VisualStudio\API\API\bin\Debug\netcoreapp3.1\Microsoft.AspNetC
 D:\Kuliah\Project\VisualStudio\API\API\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll
 D:\Kuliah\Project\VisualStudio\API\API\obj\Debug\netcoreapp3.1\API.csproj.AssemblyReference.cache
 D:\Kuliah\Project\VisualStudio\API\API\bin\Debug\netcoreapp3.1\BCrypt.Net-Next.dll
+D:\Kuliah\Project\VisualStudio\API\API\bin\Debug\netcoreapp3.1\Castle.Core.dll
+D:\Kuliah\Project\VisualStudio\API\API\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Proxies.dll

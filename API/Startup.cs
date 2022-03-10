@@ -34,12 +34,12 @@ namespace API
             services.AddScoped<EducationRepository>();
             services.AddScoped<UniversityRepository>();
 
-            //This is for configures MyContext to connect to a SSMS
+            //This is to configures MyContext to connect to a SSMS
             //"API" has created in appsetings.json
-            services.AddDbContext<MyContext>(options => options.UseSqlServer(Configuration.GetConnectionString("API")));
+            services.AddDbContext<MyContext>(options => options.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("API")));
 
-            //This is for handled reference loop eror to Json format
-            services.AddControllersWithViews().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+            //This is to handled reference loop eror to Json format
+            //services.AddControllersWithViews().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

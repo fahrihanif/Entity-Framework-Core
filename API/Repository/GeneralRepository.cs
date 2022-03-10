@@ -21,7 +21,7 @@ namespace API.Repository
             entities = myContext.Set<Entity>();
         }
 
-        //This method used for delete row in entity by Primary Key
+        //This method used to delete row in entity by Primary Key
         public int Delete(Key key)
         {
             var check = entities.Find(key);
@@ -34,19 +34,19 @@ namespace API.Repository
             return 0;
         }
 
-        //This method used for get all row in entity
+        //This method used to get all row in entity
         public IEnumerable<Entity> Get()
         {
             return entities.ToList();
         }
 
-        //This method used for get a row in entity by Primary Key
+        //This method used to get a row in entity by Primary Key
         public Entity Get(Key key)
         {
             return entities.Find(key);
         }
 
-        //This method used for insert a row to entity
+        //This method used to insert a row to entity
         public int Insert(Entity entity)
         {
             entities.Add(entity);
@@ -54,7 +54,7 @@ namespace API.Repository
             return result;
         }
 
-        //This method used for update a row in entity
+        //This method used to update a row in entity
         public virtual int Update(Entity entity)
         {
             myContext.Entry(entity).State = EntityState.Modified;

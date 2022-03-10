@@ -37,6 +37,7 @@ namespace API.Base
 
         //Get Data with parameter primary key
         [HttpGet("Search")]
+        [Route("")]
         public ActionResult GetById(Key id)
         {
             try
@@ -89,6 +90,7 @@ namespace API.Base
 
         //Delete data from row in entity by primary key
         [HttpDelete("Delete")]
+        [Route("")]
         public ActionResult Delete(Key id)
         {
             try
