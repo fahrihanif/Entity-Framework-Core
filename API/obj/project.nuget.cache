@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "gSdt6hvAQyjRuWedxorKTchOAyjPjHAljhhpkqrnizWIZ37gAFfjjQa8izK78WnI2g1YeAFjWrkZ2v/XPlp5ow==",
+  "dgSpecHash": "4bFxoh5lYFsSX3M5ygPdDWGjUi3/x0IjuGO+DY5aM/wQ0zli+wpsTKz6zrY1jGjqd2IbTk2im9qjwL4zuS6EQw==",
   "success": true,
   "projectFilePath": "D:\\Kuliah\\Project\\VisualStudio\\API\\API\\API.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,7 @@
     "C:\\Users\\fahri\\.nuget\\packages\\castle.core\\4.4.1\\castle.core.4.4.1.nupkg.sha512",
     "C:\\Users\\fahri\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\fahri\\.nuget\\packages\\mailkit\\2.6.0\\mailkit.2.6.0.nupkg.sha512",
+    "C:\\Users\\fahri\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\3.1.8\\microsoft.aspnetcore.authentication.jwtbearer.3.1.8.nupkg.sha512",
     "C:\\Users\\fahri\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\3.0.0\\microsoft.aspnetcore.jsonpatch.3.0.0.nupkg.sha512",
     "C:\\Users\\fahri\\.nuget\\packages\\microsoft.aspnetcore.mvc.newtonsoftjson\\3.0.0\\microsoft.aspnetcore.mvc.newtonsoftjson.3.0.0.nupkg.sha512",
     "C:\\Users\\fahri\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",

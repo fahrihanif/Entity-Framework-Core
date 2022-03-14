@@ -4,14 +4,16 @@ using API.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace API.Migrations
 {
     [DbContext(typeof(MyContext))]
-    partial class MyContextModelSnapshot : ModelSnapshot
+    [Migration("20220313144441_change-on-delete-cascade")]
+    partial class changeondeletecascade
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -133,8 +135,7 @@ namespace API.Migrations
 
                     b.HasKey("NIK");
 
-                    b.HasIndex("EducationId")
-                        .IsUnique();
+                    b.HasIndex("EducationId");
 
                     b.ToTable("tb_tr_profiling");
                 });
@@ -213,8 +214,8 @@ namespace API.Migrations
             modelBuilder.Entity("API.Models.Profiling", b =>
                 {
                     b.HasOne("API.Models.Education", "Education")
-                        .WithOne("Profiling")
-                        .HasForeignKey("API.Models.Profiling", "EducationId")
+                        .WithMany("Profilings")
+                        .HasForeignKey("EducationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -238,7 +239,7 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Models.Education", b =>
                 {
-                    b.Navigation("Profiling");
+                    b.Navigation("Profilings");
                 });
 
             modelBuilder.Entity("API.Models.Employee", b =>

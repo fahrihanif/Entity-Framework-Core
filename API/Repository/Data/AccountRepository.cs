@@ -6,6 +6,9 @@ using MimeKit;
 using MailKit.Net.Smtp;
 using System;
 using System.Linq;
+using System.Collections.Generic;
+using System.Collections;
+using Newtonsoft.Json;
 
 namespace API.Repository.Data
 {
@@ -13,6 +16,7 @@ namespace API.Repository.Data
     public class AccountRepository : GeneralRepository<MyContext, Account, string>
     {
         private readonly MyContext context;
+
         public AccountRepository(MyContext myContext) : base(myContext)
         {
             context = myContext;
@@ -118,16 +122,16 @@ namespace API.Repository.Data
         //call ValidatePassword method to check is parameter login equals check
         public int Login(LoginVM login)
         {
-            var check = context.Employees.Join(context.Accounts, a => a.NIK, e => e.NIK, (e, a) => new
-            {
-                NIK = a.NIK,
-                Email = e.Email,
-                Password = a.Password
-            }).SingleOrDefault(e => e.Email == login.Email);
+            var checkAccount = context.Employees
+                .Join(context.Accounts, e => e.NIK, a => a.NIK,
+                (e, a) => new {
+                    Email = e.Email,
+                    Password = a.Password
+                }).SingleOrDefault(e => e.Email == login.Email);
 
-            if (check != null)
+            if (checkAccount!= null)
             {
-                return ValidatePassword(login.Password, check.Password)
+                return ValidatePassword(login.Password, checkAccount.Password)
                     ? 2
                     : 1;
             }
@@ -174,6 +178,12 @@ namespace API.Repository.Data
                 context.Educations.Add(edu);
                 context.SaveChanges();
 
+                context.AccountRoles.Add(new AccountRole
+                {
+                    AccountNIK = emp.NIK,
+                    RoleId = 1
+                });
+
                 context.Profilings.Add(new Profiling
                 {
                     NIK = emp.NIK,
@@ -186,6 +196,29 @@ namespace API.Repository.Data
             return 0;
         }
 
+        public List<string> UserRole(string email)
+        {
+            var userRole = context.Employees.Where(e => e.Email == email)
+                .Join(context.Accounts, e => e.NIK, a => a.NIK,
+                (e, a) => new { e, a })
+                .Join(context.AccountRoles, ea => ea.a.NIK, ar => ar.AccountNIK,
+                (ea, ar) => new { ar, ea })
+                .Join(context.Roles, area => area.ar.RoleId, r => r.Id,
+                (area, r) => new
+                {
+                    r.Name
+                });
+
+            var role = new List<string>();
+
+            foreach (var item in userRole)
+            {
+                role.Add(item.Name);
+            }
+
+            return role;
+        }
+
         //This method used to check are email and phone is have been used or not
         private bool CheckEmailPhone(string email, string phone)
         {
@@ -195,7 +228,7 @@ namespace API.Repository.Data
         //This method used for plain text to chiper text using BCrypt with Salt 12
         private static string HashPassword(string password)
         {
-            return BCrypt.Net.BCrypt.HashPassword(password, 12);
+            return BCrypt.Net.BCrypt.HashPassword(password, BCrypt.Net.BCrypt.GenerateSalt(12));
         }
 
         //This method used to validate password using BCrypt

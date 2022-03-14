@@ -1,4 +1,4 @@
-﻿using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -15,7 +15,6 @@ namespace API.Models
         public string NIK { get; set; }
         [Required]
         public string FirstName { get; set; }
-        [Required]
         public string LastName { get; set; }
         [Required]
         public string Phone { get; set; }
@@ -29,7 +28,7 @@ namespace API.Models
         public Gender Gender { get; set; }
 
         //Relation
-        [JsonIgnore]
+        
         public virtual Account Account { get; set; }
     }
     public enum Gender

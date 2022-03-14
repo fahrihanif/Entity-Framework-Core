@@ -1,4 +1,4 @@
-﻿using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -20,9 +20,10 @@ namespace API.Models
         public bool IsUsed { get; set; }
 
         //Relation
-        [JsonIgnore]
         public virtual Employee Employee { get; set; }
         [JsonIgnore]
         public virtual Profiling Profiling { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<AccountRole> AccountRoles { get; set; }
     }
 }

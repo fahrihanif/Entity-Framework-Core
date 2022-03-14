@@ -1,4 +1,4 @@
-﻿using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -21,9 +21,8 @@ namespace API.Models
         public int UniversityId { get; set; }
 
         //Relation
-        [JsonIgnore]
         public virtual University University { get; set; }
         [JsonIgnore]
-        public virtual ICollection<Profiling> Profilings { get; set; }
+        public virtual Profiling Profiling { get; set; }
     }
 }

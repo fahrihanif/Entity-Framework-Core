@@ -1,4 +1,5 @@
 ﻿using API.Repository.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,7 @@ namespace API.Base
         }
 
         //Get Data
+        [Authorize(Roles = "Director, Manager")]
         [HttpGet]
         public ActionResult GetAll()
         {
@@ -36,6 +38,7 @@ namespace API.Base
         }
 
         //Get Data with parameter primary key
+        [Authorize(Roles = "Director, Manager")]
         [HttpGet("Search")]
         [Route("")]
         public ActionResult GetById(Key id)
@@ -55,8 +58,9 @@ namespace API.Base
         }
 
         //Insert data to entity
+        [Authorize(Roles = "Director")]
         [HttpPost]
-        public ActionResult Post(Entity entity)
+        public virtual ActionResult Post(Entity entity)
         {
             try
             {
@@ -89,6 +93,7 @@ namespace API.Base
         }
 
         //Delete data from row in entity by primary key
+        [Authorize]
         [HttpDelete("Delete")]
         [Route("")]
         public ActionResult Delete(Key id)

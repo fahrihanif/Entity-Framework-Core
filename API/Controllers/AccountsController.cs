@@ -2,23 +2,34 @@
 using API.Models;
 using API.Repository.Data;
 using API.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace API.Controllers
 {
     //This class to implement BaseController in Account
+    [Authorize]
     [Route("api/Accounts")]
     [ApiController]
     public class AccountsController : BaseController<Account, AccountRepository, string>
     {
         private readonly AccountRepository repository;
-        public AccountsController(AccountRepository repository) : base(repository)
+
+        private IConfiguration configuration;
+        public AccountsController(AccountRepository repository, IConfiguration configuration) : base(repository)
         {
             this.repository = repository;
+            this.configuration = configuration;
         }
 
         //Get all return from method EmployeeRepostory ChangePassword and send result to postman
@@ -55,7 +66,7 @@ namespace API.Controllers
                 var put = repository.ForgotPassword(email);
                 return put == 0 
                     ? NotFound(new { msg = "Akun Tidak Ditemukan" }) 
-                    : (ActionResult)Ok(new { msg = "OTP Berhasil Dikirim, Periksa Email Anda!" });
+                    : (ActionResult)Ok(new {msg = "OTP Berhasil Dikirim, Periksa Email Anda!" });
             }
             catch (Exception e)
             {
@@ -64,18 +75,48 @@ namespace API.Controllers
         }
 
         //Get all return from method EmployeeRepostory Login and send result to postman
+        [AllowAnonymous]
         [HttpGet("Login")]
         public ActionResult Login(LoginVM login)
         {
             try
             {
                 var get = repository.Login(login);
-                return get switch
+
+                switch (get)
                 {
-                    0 => NotFound(new { msg = "Akun Tidak Ditemukan" }),
-                    1 => NotFound(new { msg = "Password Salah" }),
-                    _ => Ok(new { msg = "Login Berhasil" })
-                };
+                    case 0:
+                        return NotFound(new { msg = "Akun Tidak Ditemukan" });
+                    case 1:
+                        return NotFound(new { msg = "Password Salah" });
+                    default:
+                        var role = repository.UserRole(login.Email);
+
+                        var claims = new List<Claim>()
+                        {
+                            new Claim("email", login.Email)
+                        };
+
+                        foreach (var i in role)
+                        {
+                            claims.Add(new Claim("role", i));
+                        }
+
+                        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:key"]));
+                        var signin = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+                        var token = new JwtSecurityToken(
+                            configuration["Jwt:Issuer"],
+                            configuration["Jwt:Audience"],
+                            claims,
+                            expires: DateTime.UtcNow.AddMinutes(10),
+                            signingCredentials: signin
+                            );
+
+                        var idToken = new JwtSecurityTokenHandler().WriteToken(token);
+                        claims.Add(new Claim("Token Security", idToken.ToString()));
+
+                        return Ok(new { status = HttpStatusCode.OK, idToken, msg = "Login Berhasil" });
+                }
             }
             catch (Exception e)
             {
