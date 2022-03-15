@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 namespace API.Controllers
 {
     //This class to implement BaseController in Employee
+    [Authorize]
     [Route("api/Employees")]
     [ApiController]
     public class EmployeesController : BaseController<Employee, EmployeeRepository, string>
@@ -21,6 +22,13 @@ namespace API.Controllers
         public EmployeesController(EmployeeRepository repository) : base(repository)
         {
             this.repository = repository;
+        }
+
+        [AllowAnonymous]
+        [HttpGet("TestCORS")]
+        public ActionResult TestCORS()
+        {
+            return Ok("Test CORS Berhasil");
         }
 
         //Get Data
@@ -32,7 +40,7 @@ namespace API.Controllers
             {
                 var get = repository.MasterEmployeeData();
                 return get == null
-                    ? NotFound(new { msg = "Data Tidak Ada" })
+                    ? NotFound(new { message = "Data Tidak Ada" })
                     : (ActionResult)Ok(repository.MasterEmployeeData());
             }
             catch (Exception e)
@@ -42,6 +50,7 @@ namespace API.Controllers
         }
 
         //Update
+        [Authorize]
         [HttpPut]
         public override ActionResult Update(Employee entity)
         {
@@ -49,8 +58,8 @@ namespace API.Controllers
             {
                 var update = repository.Update(entity);
                 return update == 0
-                    ? NotFound((new { msg = "Data Gagal Diubah Email dan Phone Tidak Boleh Sama Dengan Employee Lain" }))
-                    : (ActionResult)Ok(new { msg = "Data Berhasil Diubah" });
+                    ? NotFound((new { message = "Data Gagal Diubah Email dan Phone Tidak Boleh Sama Dengan Employee Lain" }))
+                    : (ActionResult)Ok(new { message = "Data Berhasil Diubah" });
             }
             catch (Exception e)
             {

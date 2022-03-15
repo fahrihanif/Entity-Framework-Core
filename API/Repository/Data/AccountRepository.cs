@@ -22,7 +22,7 @@ namespace API.Repository.Data
             context = myContext;
         }
 
-        //This method used for change password
+        //This method used to change password
         //account used to get a row from entities by Email
         //check all condition are change same with account
         //send potential value if some condtion not passed
@@ -72,7 +72,7 @@ namespace API.Repository.Data
             return 0;
         }
 
-        //This method used for send OTP to employee email
+        //This method used to send OTP to employee email
         //account used to get a row from entities by parameter email
         //if account is not empty condition passed
         //acc to generate OTP, set OTP can used for 5min then update Account
@@ -116,7 +116,7 @@ namespace API.Repository.Data
             return 0;
         }
 
-        //This method used for Login
+        //This method used to Login
         //check used to get a row from entities by parameter login
         //if check is not empty condition passed
         //call ValidatePassword method to check is parameter login equals check
@@ -138,7 +138,7 @@ namespace API.Repository.Data
             return 0;
         }
 
-        //This method used for register
+        //This method used to register
         //generate NIK by Year and Count rows in employee entity
         //call CheckEmailPhone by parameter email and phone from register
         //if condition passed add all to entities
@@ -196,27 +196,17 @@ namespace API.Repository.Data
             return 0;
         }
 
+        //This method used to get all role that contains email
         public List<string> UserRole(string email)
         {
-            var userRole = context.Employees.Where(e => e.Email == email)
-                .Join(context.Accounts, e => e.NIK, a => a.NIK,
-                (e, a) => new { e, a })
-                .Join(context.AccountRoles, ea => ea.a.NIK, ar => ar.AccountNIK,
-                (ea, ar) => new { ar, ea })
-                .Join(context.Roles, area => area.ar.RoleId, r => r.Id,
-                (area, r) => new
-                {
-                    r.Name
-                });
+            var checkNIK = context.Employees.SingleOrDefault(e => e.Email == email).NIK;
 
-            var role = new List<string>();
+            var checkRole = context.AccountRoles
+                .Where(ar => ar.AccountNIK == checkNIK)
+                .Join(context.Roles, ar => ar.RoleId, r => r.Id, (ar, r) => r.Name)
+                .ToList();
 
-            foreach (var item in userRole)
-            {
-                role.Add(item.Name);
-            }
-
-            return role;
+            return checkRole;
         }
 
         //This method used to check are email and phone is have been used or not

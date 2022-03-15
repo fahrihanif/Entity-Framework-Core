@@ -41,12 +41,12 @@ namespace API.Controllers
                 var put = repository.ChangePassord(change);
                 return put switch
                 {
-                    0 => NotFound(new { msg = "Akun Tidak Ditemukan!" }),
-                    1 => NotFound(new { msg = "OTP Salah!" }),
-                    2 => NotFound(new { msg = "OTP Sudah Pernah Digunakan!" }),
-                    3 => NotFound(new { msg = "OTP Sudah Tidak Berlaku" }),
-                    4 => NotFound(new { msg = "Password Tidak Sesuai" }),
-                    _ => Ok(new { msg = "Password Berhasil Diubah" })
+                    0 => NotFound(new { message = "Akun Tidak Ditemukan!" }),
+                    1 => NotFound(new { message = "OTP Salah!" }),
+                    2 => NotFound(new { message = "OTP Sudah Pernah Digunakan!" }),
+                    3 => NotFound(new { message = "OTP Sudah Tidak Berlaku" }),
+                    4 => NotFound(new { message = "Password Tidak Sesuai" }),
+                    _ => Ok(new { message = "Password Berhasil Diubah" })
                 };
             }
             catch (Exception e)
@@ -65,8 +65,8 @@ namespace API.Controllers
             {
                 var put = repository.ForgotPassword(email);
                 return put == 0 
-                    ? NotFound(new { msg = "Akun Tidak Ditemukan" }) 
-                    : (ActionResult)Ok(new {msg = "OTP Berhasil Dikirim, Periksa Email Anda!" });
+                    ? NotFound(new { message = "Akun Tidak Ditemukan" }) 
+                    : (ActionResult)Ok(new {message = "OTP Berhasil Dikirim, Periksa Email Anda!" });
             }
             catch (Exception e)
             {
@@ -82,13 +82,12 @@ namespace API.Controllers
             try
             {
                 var get = repository.Login(login);
-
                 switch (get)
                 {
                     case 0:
-                        return NotFound(new { msg = "Akun Tidak Ditemukan" });
+                        return NotFound(new { message = "Akun Tidak Ditemukan" });
                     case 1:
-                        return NotFound(new { msg = "Password Salah" });
+                        return NotFound(new { message = "Password Salah" });
                     default:
                         var role = repository.UserRole(login.Email);
 
@@ -102,20 +101,20 @@ namespace API.Controllers
                             claims.Add(new Claim("role", i));
                         }
 
-                        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:key"]));
-                        var signin = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+                        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));
+                        var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
                         var token = new JwtSecurityToken(
                             configuration["Jwt:Issuer"],
                             configuration["Jwt:Audience"],
                             claims,
                             expires: DateTime.UtcNow.AddMinutes(10),
-                            signingCredentials: signin
+                            signingCredentials: signIn
                             );
 
                         var idToken = new JwtSecurityTokenHandler().WriteToken(token);
                         claims.Add(new Claim("Token Security", idToken.ToString()));
 
-                        return Ok(new { status = HttpStatusCode.OK, idToken, msg = "Login Berhasil" });
+                        return Ok(new { status = HttpStatusCode.OK, idToken, message = "Login Berhasil" });
                 }
             }
             catch (Exception e)
@@ -125,6 +124,7 @@ namespace API.Controllers
         }
 
         //Get all return from method EmployeeRepostory Register and send result to postman
+        [AllowAnonymous]
         [HttpPost("Register")]
         public ActionResult Register(RegisterVM register)
         {
@@ -132,8 +132,8 @@ namespace API.Controllers
             {
                 var post = repository.Register(register);
                 return post == 0
-                    ? NotFound(new { msg = "Data Gagal Disimpan Silahkan Periksa Kembali" })
-                    : (ActionResult)Ok(new { msg = "Data Berhasil Disimpan" });
+                    ? NotFound(new { message = "Data Gagal Disimpan Silahkan Periksa Kembali" })
+                    : (ActionResult)Ok(new { message = "Data Berhasil Disimpan" });
             }
             catch (Exception e)
             {

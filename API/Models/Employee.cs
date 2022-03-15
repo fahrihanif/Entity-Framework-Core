@@ -28,7 +28,6 @@ namespace API.Models
         public Gender Gender { get; set; }
 
         //Relation
-        
         public virtual Account Account { get; set; }
     }
     public enum Gender

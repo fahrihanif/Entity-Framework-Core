@@ -37,6 +37,7 @@ namespace API
             services.AddScoped<EducationRepository>();
             services.AddScoped<UniversityRepository>();
             services.AddScoped<AccountRoleRepository>();
+            services.AddScoped<RoleRepository>();
 
             //This is to configures MyContext to connect to a SSMS
             //"API" has created in appsetings.json
@@ -45,6 +46,7 @@ namespace API
             //This is to handled reference loop eror to Json format
             services.AddControllersWithViews().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
+            //This is to configuration JWT
             services.AddAuthentication(auth =>
             {
                 auth.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -64,6 +66,12 @@ namespace API
                     ClockSkew = TimeSpan.Zero
                 };
             });
+
+            //Add Cors
+            services.AddCors(c =>
+            {
+                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -81,6 +89,8 @@ namespace API
             app.UseAuthentication();
 
             app.UseAuthorization();
+
+            app.UseCors(options => options.AllowAnyOrigin());
 
             app.UseEndpoints(endpoints =>
             {

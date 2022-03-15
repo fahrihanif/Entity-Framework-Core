@@ -17,6 +17,7 @@ namespace API.Repository.Data
             this.context = context;
         }
 
+        //This method is to check whether it has been added before or not
         public bool CheckRole(AccountRole role)
         {
             return context.AccountRoles.SingleOrDefault(a => a.AccountNIK == role.AccountNIK && a.RoleId == role.RoleId) == null;
