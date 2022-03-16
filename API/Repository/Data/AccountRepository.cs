@@ -1,14 +1,11 @@
 ﻿using API.Context;
 using API.Models;
 using API.ViewModel;
-using Microsoft.EntityFrameworkCore;
-using MimeKit;
 using MailKit.Net.Smtp;
+using MimeKit;
 using System;
-using System.Linq;
 using System.Collections.Generic;
-using System.Collections;
-using Newtonsoft.Json;
+using System.Linq;
 
 namespace API.Repository.Data
 {
@@ -80,12 +77,13 @@ namespace API.Repository.Data
         public int ForgotPassword(String email)
         {
             var account = context.Employees.Join
-                (context.Accounts, a => a.NIK, e => e.NIK, 
-                (e, a) => new {
+                (context.Accounts, a => a.NIK, e => e.NIK,
+                (e, a) => new
+                {
                     NIK = a.NIK,
                     Email = e.Email,
                     Password = a.Password
-            }).SingleOrDefault(e => e.Email == email);
+                }).SingleOrDefault(e => e.Email == email);
 
             if (account != null)
             {
@@ -100,10 +98,10 @@ namespace API.Repository.Data
                 Update(acc);
 
                 var message = new MimeMessage();
-                message.From.Add(new MailboxAddress("Forgot Password EF Core","kaibee3333@gmail.com"));
+                message.From.Add(new MailboxAddress("Forgot Password EF Core", "kaibee3333@gmail.com"));
                 message.To.Add(MailboxAddress.Parse(email));
                 message.Subject = $"Change Password OTP ({acc.OTP})";
-                message.Body = new TextPart("Plain") { Text = $"Kode OTP : {acc.OTP}"};
+                message.Body = new TextPart("Plain") { Text = $"Kode OTP : {acc.OTP}" };
 
                 SmtpClient smtp = new SmtpClient();
                 smtp.Connect("smtp.gmail.com", 465, true);
@@ -124,12 +122,13 @@ namespace API.Repository.Data
         {
             var checkAccount = context.Employees
                 .Join(context.Accounts, e => e.NIK, a => a.NIK,
-                (e, a) => new {
+                (e, a) => new
+                {
                     Email = e.Email,
                     Password = a.Password
                 }).SingleOrDefault(e => e.Email == login.Email);
 
-            if (checkAccount!= null)
+            if (checkAccount != null)
             {
                 return ValidatePassword(login.Password, checkAccount.Password)
                     ? 2

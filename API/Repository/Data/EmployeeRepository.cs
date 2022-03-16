@@ -1,12 +1,8 @@
 ﻿using API.Context;
 using API.Models;
-using API.ViewModel;
-using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace API.Repository.Data
 {
@@ -50,8 +46,8 @@ namespace API.Repository.Data
         //override method update in GeneralRepository to check entity before update
         public override int Update(Employee entity)
         {
-            return CheckEmailPhone(entity) 
-                ? base.Update(entity) 
+            return CheckEmailPhone(entity)
+                ? base.Update(entity)
                 : 0;
         }
 

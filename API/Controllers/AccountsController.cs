@@ -9,11 +9,9 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Net;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace API.Controllers
 {
@@ -53,7 +51,7 @@ namespace API.Controllers
             {
                 return BadRequest(e);
             }
-                
+
         }
 
         //Get all return from method EmployeeRepostory ForgotPassword and send result to postman
@@ -64,9 +62,9 @@ namespace API.Controllers
             try
             {
                 var put = repository.ForgotPassword(email);
-                return put == 0 
-                    ? NotFound(new { message = "Akun Tidak Ditemukan" }) 
-                    : (ActionResult)Ok(new {message = "OTP Berhasil Dikirim, Periksa Email Anda!" });
+                return put == 0
+                    ? NotFound(new { message = "Akun Tidak Ditemukan" })
+                    : (ActionResult)Ok(new { message = "OTP Berhasil Dikirim, Periksa Email Anda!" });
             }
             catch (Exception e)
             {
