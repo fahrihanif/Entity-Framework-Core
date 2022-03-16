@@ -31,7 +31,7 @@ namespace API.Controllers
             return Ok("Test CORS Berhasil");
         }
 
-        //Get Data
+        //Get Data master
         [Authorize(Roles = "Director, Manager")]
         [HttpGet("Master")]
         public ActionResult GetAllMaster()
@@ -49,7 +49,7 @@ namespace API.Controllers
             }
         }
 
-        //Update
+        //Update employee
         [Authorize]
         [HttpPut]
         public override ActionResult Update(Employee entity)
