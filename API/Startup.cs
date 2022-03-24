@@ -3,6 +3,7 @@ using API.Repository.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -67,8 +68,13 @@ namespace API
             //Add Cors
             services.AddCors(c =>
             {
-                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
+                c.AddDefaultPolicy(options => options
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .SetIsOriginAllowed(origin => true)
+                    .AllowCredentials());
             });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -79,6 +85,8 @@ namespace API
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors();
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
@@ -86,8 +94,6 @@ namespace API
             app.UseAuthentication();
 
             app.UseAuthorization();
-
-            app.UseCors(options => options.AllowAnyOrigin());
 
             app.UseEndpoints(endpoints =>
             {
