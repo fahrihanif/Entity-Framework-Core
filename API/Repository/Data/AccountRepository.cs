@@ -143,10 +143,18 @@ namespace API.Repository.Data
         //if condition passed add all to entities
         public int Register(RegisterVM register)
         {
-            var empCount = context.Employees.Count() + 1;
             var Year = DateTime.Now.Year;
-            register.NIK = Year + "00" + empCount.ToString();
+            var empCount = context.Employees.OrderByDescending(e => e.NIK).FirstOrDefault();
 
+            if (empCount == null)
+            {
+                register.NIK = Year + "00" + 1;
+            }
+            else
+            {
+                register.NIK = Convert.ToString(Convert.ToInt32(empCount.NIK) + 1);
+            }
+            
             if (CheckEmailPhone(register.Email, register.Phone))
             {
                 Employee emp = new Employee
