@@ -26,7 +26,7 @@ namespace API.Base
             {
                 var get = repository.Get().Count();
                 return get == 0
-                    ? NotFound(new { msg = "Data Tidak Ada" })
+                    ? NotFound(new { message = "Data Tidak Ada" })
                     : (ActionResult)Ok(repository.Get());
             }
             catch (Exception e)
@@ -45,7 +45,7 @@ namespace API.Base
             {
                 var get = repository.Get(id);
                 return get == null
-                    ? NotFound(new { msg = "Data Tidak Ditemukan" })
+                    ? NotFound(new { message = "Data Tidak Ditemukan" })
                     : (ActionResult)Ok(get);
             }
             catch (Exception e)
@@ -64,8 +64,8 @@ namespace API.Base
             {
                 var post = repository.Insert(entity);
                 return post == 0
-                    ? NotFound(new { msg = "Data Gagal Disimpan Silahkan Periksa Kembali" })
-                    : (ActionResult)Ok(new { msg = "Data Berhasil Disimpan" });
+                    ? NotFound(new { message = "Data Gagal Disimpan Silahkan Periksa Kembali" })
+                    : (ActionResult)Ok(new { message = "Data Berhasil Disimpan" });
             }
             catch (Exception e)
             {
@@ -81,8 +81,8 @@ namespace API.Base
             {
                 var update = repository.Update(entity);
                 return update == 0
-                    ? NotFound((new { msg = "Data Gagal Diubah Silahkan Periksa Kembali" }))
-                    : (ActionResult)Ok(new { msg = "Data Berhasil Diubah" });
+                    ? NotFound((new { message = "Data Gagal Diubah Silahkan Periksa Kembali" }))
+                    : (ActionResult)Ok(new { message = "Data Berhasil Diubah" });
             }
             catch (Exception e)
             {
@@ -100,8 +100,8 @@ namespace API.Base
             {
                 var delete = repository.Delete(id);
                 return delete == 0
-                    ? NotFound(new { msg = $"{id} Tidak Ditemukan" })
-                    : (ActionResult)Ok(new { msg = $"Id {id} Berhasil Dihapus" });
+                    ? NotFound(new { message = $"{id} Not Found" })
+                    : (ActionResult)Ok(new { message = $"Your selected id has been deleted" });
             }
             catch (Exception e)
             {
