@@ -7,7 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Controllers
 {
     //This class to implement BaseController in Univerisity
-    [Authorize]
+    //[Authorize]
+    [AllowAnonymous]
     [Route("api/Universities")]
     [ApiController]
     public class UniversitiesController : BaseController<University, UniversityRepository, int>

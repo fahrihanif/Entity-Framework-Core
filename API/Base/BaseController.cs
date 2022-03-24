@@ -1,5 +1,6 @@
 ﻿using API.Repository.Interface;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
@@ -36,7 +37,8 @@ namespace API.Base
         }
 
         //Get Data with parameter primary key
-        [Authorize(Roles = "Director, Manager")]
+        //[Authorize(Roles = "Director, Manager")]
+        [AllowAnonymous]
         [HttpGet("Search")]
         [Route("")]
         public ActionResult GetById(Key id)
@@ -74,6 +76,7 @@ namespace API.Base
         }
 
         //Update data from existing row in entity
+        [AllowAnonymous]
         [HttpPut]
         public virtual ActionResult Update(Entity entity)
         {
@@ -91,7 +94,8 @@ namespace API.Base
         }
 
         //Delete data from row in entity by primary key
-        [Authorize]
+        //[Authorize]
+        [AllowAnonymous]
         [HttpDelete("Delete")]
         [Route("")]
         public ActionResult Delete(Key id)
