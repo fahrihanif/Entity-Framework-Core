@@ -34,7 +34,7 @@ namespace API.Repository.Data
                     Phone = eape.eap.ea.e.Phone,
                     Gender = eape.eap.ea.e.Gender.ToString(),
                     Email = eape.eap.ea.e.Email,
-                    BithDate = eape.eap.ea.e.BirthDate,
+                    BirthDate = eape.eap.ea.e.BirthDate,
                     Salary = eape.eap.ea.e.Salary,
                     Education_Id = eape.eap.p.EducationId,
                     GPA = eape.e.GPA,
