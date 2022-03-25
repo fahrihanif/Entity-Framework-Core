@@ -1,5 +1,7 @@
 ﻿using API.Context;
 using API.Models;
+using API.ViewModel;
+using Newtonsoft.Json.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +15,25 @@ namespace API.Repository.Data
         public EmployeeRepository(MyContext myContext) : base(myContext)
         {
             context = myContext;
+        }
+
+        public IEnumerable TotalUniversity()
+        {
+            return context.Universities
+                .Select(u => new
+                {
+                    Labels = u.Name,
+                    Series = u.Educations.Count
+                });
+        }
+
+        public ChartVM TotalGender()
+        {
+            string[] labels = { Gender.Male.ToString(), Gender.Female.ToString() };
+            int[] series = { context.Employees.Where(e => e.Gender == Gender.Male).Count(),
+                            context.Employees.Where(e => e.Gender == Gender.Female).Count()};
+
+            return new ChartVM(labels, series);
         }
 
         //This method to get all Entities

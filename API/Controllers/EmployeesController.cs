@@ -20,6 +20,40 @@ namespace API.Controllers
             this.repository = repository;
         }
 
+        [AllowAnonymous]
+        [HttpGet("UniversityCount")]
+        public ActionResult GetUniversityCount()
+        {
+            try
+            {
+                var get = repository.TotalUniversity();
+                return get == null
+                    ? NotFound(new { message = "Data Tidak Ada" })
+                    : (ActionResult)Ok(repository.TotalUniversity());
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
+
+        [AllowAnonymous]
+        [HttpGet("GenderCount")]
+        public ActionResult GetGenderCount()
+        {
+            try
+            {
+                var get = repository.TotalGender();
+                return get == null
+                    ? NotFound(new { message = "Data Tidak Ada" })
+                    : (ActionResult)Ok(repository.TotalGender());
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
+
         //Get Data master
         //[Authorize(Roles = "Director, Manager")]
         [AllowAnonymous]
