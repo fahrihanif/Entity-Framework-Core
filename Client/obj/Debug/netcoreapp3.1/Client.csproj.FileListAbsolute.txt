@@ -81,7 +81,6 @@ D:\Kuliah\Project\VisualStudio\API\Client\bin\Debug\netcoreapp3.1\ru\Microsoft.C
 D:\Kuliah\Project\VisualStudio\API\Client\bin\Debug\netcoreapp3.1\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
 D:\Kuliah\Project\VisualStudio\API\Client\bin\Debug\netcoreapp3.1\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 D:\Kuliah\Project\VisualStudio\API\Client\bin\Debug\netcoreapp3.1\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:\Kuliah\Project\VisualStudio\API\Client\obj\Debug\netcoreapp3.1\Client.csproj.AssemblyReference.cache
 D:\Kuliah\Project\VisualStudio\API\Client\obj\Debug\netcoreapp3.1\Client.GeneratedMSBuildEditorConfig.editorconfig
 D:\Kuliah\Project\VisualStudio\API\Client\obj\Debug\netcoreapp3.1\Client.AssemblyInfoInputs.cache
 D:\Kuliah\Project\VisualStudio\API\Client\obj\Debug\netcoreapp3.1\Client.AssemblyInfo.cs
@@ -110,3 +109,10 @@ D:\Kuliah\Project\VisualStudio\API\Client\obj\Debug\netcoreapp3.1\Client.dll
 D:\Kuliah\Project\VisualStudio\API\Client\obj\Debug\netcoreapp3.1\Client.pdb
 D:\Kuliah\Project\VisualStudio\API\Client\obj\Debug\netcoreapp3.1\Client.genruntimeconfig.cache
 D:\Kuliah\Project\VisualStudio\API\Client\obj\Debug\netcoreapp3.1\Razor\Views\TestCors\Index.cshtml.g.cs
+D:\Kuliah\Project\VisualStudio\API\Client\obj\Debug\netcoreapp3.1\Razor\Views\Latihan\Index.cshtml.g.cs
+D:\Kuliah\Project\VisualStudio\API\Client\obj\Debug\netcoreapp3.1\Client.csproj.AssemblyReference.cache
+D:\Kuliah\Project\VisualStudio\API\Client\obj\Debug\netcoreapp3.1\Razor\Views\Latihan\Pokedex.cshtml.g.cs
+D:\Kuliah\Project\VisualStudio\API\Client\obj\Debug\netcoreapp3.1\Razor\Views\Latihan\Employee.cshtml.g.cs
+D:\Kuliah\Project\VisualStudio\API\Client\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Index.cshtml.g.cs
+D:\Kuliah\Project\VisualStudio\API\Client\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_AdminLayout.cshtml.g.cs
+D:\Kuliah\Project\VisualStudio\API\Client\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Employee.cshtml.g.cs

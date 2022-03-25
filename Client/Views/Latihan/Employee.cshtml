@@ -1,0 +1,262 @@
+﻿
+@{
+    ViewData["Title"] = "Employee";
+}
+
+<h1>Employee</h1>
+
+<table class="table table-bordered table-hover" id="tblEmployee">
+    <thead class="thead-dark">
+        <tr>
+            <th class="text-center">No</th>
+            <th class="text-center">NIK</th>
+            <th class="text-center">Name</th>
+            <th class="text-center">Email</th>
+            <th class="text-center">Phone Number</th>
+            <th class="text-center">Gender</th>
+            <th class="text-center">Birthdate</th>
+            <th class="text-center">Salary</th>
+            <th class="text-center">GPA</th>
+            <th class="text-center">Degree</th>
+            <th class="text-center">University</th>
+            <th class="text-center">Action</th>
+        </tr>
+    </thead>
+    <tbody id="employee">
+    </tbody>
+</table>
+
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade bd-example-modal-lg" id="modalRegisterEmployee" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Employee</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form role="form" method="POST" action="" class="needs-validation" id="formRegister" novalidate>
+                    <div class="form-row">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group">
+                                <label class="control-label">First Name<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control input-lg" name="first_name" id="first_name" value="" required>
+                                <div class="invalid-feedback">
+                                    Please provide a valid first name.
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Last Name</label>
+                                <input type="text" class="form-control input-lg" name="last_name" id="last_name" value="">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Phone Number<span class="text-danger">*</span></label>
+                                <input type="number" class="form-control input-lg" name="phone" id="phone" value="" required>
+                                <div class="invalid-feedback">
+                                    Please provide a valid phone number.
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Birthdate<span class="text-danger">*</span></label>
+                                <input type="date" class="form-control input-lg" name="birthdate" id="birthdate" value="" required>
+                                <div class="invalid-feedback">
+                                    Please provide a valid birthdate.
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Gender<span class="text-danger">*</span></label>
+                                <div class="form-control input-lg">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="gender" id="male_radio" value="0" required>
+                                        <label class="form-check-label" for="male">Male</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="gender" id="female_radio" value="1" required>
+                                        <label class="form-check-label" for="female">Female</label>
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Please select a gender.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Salary<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control input-lg" name="salary" id="salary" value="" required>
+                                <div class="invalid-feedback">
+                                    Please set salary.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group">
+                                <label class="control-label">Degree<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control input-lg" name="degree" id="degree" value="" required>
+                                <div class="invalid-feedback">
+                                    Please provide a valid degree.
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">GPA<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control input-lg" name="gpa" id="gpa" value="" required>
+                                <div class="invalid-feedback">
+                                    Please provide a valid GPA.
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">University<span class="text-danger">*</span></label>
+                                <select class="form-control" id="university_id" required>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Please select a university.
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">E-Mail Address<span class="text-danger">*</span></label>
+                                <input type="email" class="form-control input-lg" name="email" id="email" value="" required>
+                                <div class="invalid-feedback">
+                                    Please provide a valid email.
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Password<span class="text-danger">*</span></label>
+                                <input type="password" class="form-control input-lg" name="password" id="password" required>
+                                <div class="invalid-feedback">
+                                    Password cannot be empty.
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Confirm Password<span class="text-danger">*</span></label>
+                                <input type="password" class="form-control input-lg" name="password_confirmation" id="password_confirmation" required>
+                                <div class="invalid-feedback">
+                                    Password cannot be empty.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="text-right">
+                            <button class="btn btn-success" id="btn_register">Register</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bd-example-modal-lg" id="modalUpdateEmployee" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Employee</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form role="form" method="POST" action="" class="needs-validation" novalidate>
+                    <div class="form-group">
+                        <label class="control-label">NIK</label>
+                        <input type="text" class="form-control input-lg" name="nik" id="nik" disabled>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group">
+                                <label class="control-label">First Name<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control input-lg" name="first_name" id="put_first_name" value="" required>
+                                <div class="invalid-feedback">
+                                    Please provide a valid first name.
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Last Name</label>
+                                <input type="text" class="form-control input-lg" name="last_name" id="put_last_name" value="">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Phone Number<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control input-lg" name="phone" id="put_phone" value="" required>
+                                <div class="invalid-feedback">
+                                    Please provide a valid phone number.
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Birthdate<span class="text-danger">*</span></label>
+                                <input type="date" class="form-control input-lg" name="birthdate" id="put_birthdate" value="" required>
+                                <div class="invalid-feedback">
+                                    Please provide a valid birthdate.
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Gender<span class="text-danger">*</span></label>
+                                <div class="form-control input-lg">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="gender" id="put_male_radio" value="0" required>
+                                        <label class="form-check-label" for="male">Male</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="gender" id="put_female_radio" value="1" required>
+                                        <label class="form-check-label" for="female">Female</label>
+                                        <div class="invalid-feedback">
+                                            Please select a gender.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group">
+                                <label class="control-label">Salary<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control input-lg" name="salary" id="put_salary" value="" required>
+                                <div class="invalid-feedback">
+                                    Please set salary.
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Degree<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control input-lg" name="degree" id="put_degree" value="" required>
+                                <div class="invalid-feedback">
+                                    Please provide a valid degree.
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">GPA<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control input-lg" name="gpa" id="put_gpa" value="" required>
+                                <div class="invalid-feedback">
+                                    Please provide a valid GPA.
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">University<span class="text-danger">*</span></label>
+                                <select class="form-control" id="put_university_id" required>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Please select a university.
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">E-Mail Address<span class="text-danger">*</span></label>
+                                <input type="email" class="form-control input-lg" name="email" id="put_email" value="" required>
+                                <div class="invalid-feedback">
+                                    Please provide a valid email.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="text-right">
+                            <button class="btn btn-success" id="btn_update">Save Changes</button>
+                            <button class="btn btn-danger" id="btn_cancel" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,116 @@
+﻿
+@{
+    ViewData["Title"] = "Pokedex";
+}
+
+<h1>Pokedex</h1>
+
+<table class="table table-hover table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th>No</th>
+            <th>Nama</th>
+            <th>Aksi</th>
+        </tr>
+    </thead>
+    <tbody id="pokedex">
+    </tbody>
+</table>
+
+<div class="d-flex justify-content-center">
+    <div id="loadingpoke" class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade bd-example-modal-lg" id="modalPoke" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div id="imgPoke" class="col-4">
+
+                    </div>
+                    <div id="mainPoke" class="col">
+                        <div id="typesPoke"></div>
+                        <h5>Evolution Line</h5>
+                        <div class="row align-items-center" style="text-align:center">
+                            <div id="evoPoke1" class="col-3">
+                            </div>
+                            <i class="fa-solid fa-chevron-right"></i>
+                            <div id="evoPoke2" class="col-3">
+                            </div>
+                            <i class="fa-solid fa-chevron-right"></i>
+                            <div id="evoPoke3" class="col-3">
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col mb-0" style="text-align:center">
+                                <h5>Abilities</h5>
+                                <div id="abiPoke" class="row"></div>
+                            </div>
+                            <div id="sizePoke" class="col mb-0" style="text-align:center">
+                                <h5>Size</h5>
+                                <div class="row">
+                                    <div class="col">
+                                        <p class="m-0">Height</p>
+                                        <h6 id="heightPoke"></h6>
+                                    </div>
+                                    <div class="col">
+                                        <p class="m-0">Weight</p>
+                                        <h6 id="weightPoke"></h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-8">
+                        <h5>Base Stat</h5>
+                        <div class="row">
+                            <div class="col">
+                                <p class="m-0">HP</p>
+                                <p class="m-0">Attack</p>
+                                <p class="m-0">Defense</p>
+                            </div>
+                            <div id="progressPoke" class="col-8">
+                            </div>
+                            <div id="statPoke" class="col">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <h5>Encounters</h5>
+                        <ul id="encPoke"></ul>
+                    </div>
+                </div>
+
+                <h5>Moves</h5>
+                <ul class="nav nav-tabs" id="movesTabPoke">
+                </ul>
+
+                <div id="movesContentPoke" class="tab-content">
+
+                </div>
+
+                <div class="d-flex justify-content-center">
+                    <div id="loadingPokeModal" class="spinner-border" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
