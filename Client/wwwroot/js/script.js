@@ -256,7 +256,7 @@ function Register() {
 $(document).ready(function () {
     let table = $("#tblEmployee").DataTable({
         "ajax": {
-            "url": "https://localhost:5001/API/Employees/Master",
+            "url": "../Employees/GetAllProfile/",
             "dataType": "Json",
             "dataSrc": ""
         },
@@ -357,7 +357,7 @@ var colorPalette = ['#00D8B6', '#008FFB', '#FEB019', '#FF4560', '#775DD0'];
 
 $.ajax({
     type: "GET",
-    url: "https://localhost:5001/API/Employees/UniversityCount"
+    url: "/"
 }).done((result) => {
     var labels = [];
     var series = [];

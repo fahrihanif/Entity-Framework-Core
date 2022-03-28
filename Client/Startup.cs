@@ -1,3 +1,6 @@
+using Client.Base;
+using Client.Repositories.Data;
+using Client.Repositories.Interface;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -24,6 +27,11 @@ namespace Client
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            
+            //Add scoped
+            services.AddScoped<Address>();
+            services.AddScoped<EmployeeRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
