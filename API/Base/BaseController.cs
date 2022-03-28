@@ -19,7 +19,8 @@ namespace API.Base
         }
 
         //Get Data
-        [Authorize(Roles = "Director, Manager")]
+        //[Authorize(Roles = "Director, Manager")]
+        [AllowAnonymous]
         [HttpGet]
         public ActionResult GetAll()
         {
