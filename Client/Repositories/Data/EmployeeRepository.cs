@@ -40,14 +40,14 @@ namespace Client.Repositories.Data
             return result.StatusCode;
         }
 
-        public async Task<List<MasterEmployeeVM>> GetAllProfile()
+        public async Task<List<MasterEmployee>> GetAllProfile()
         {
-            List<MasterEmployeeVM> entities = new List<MasterEmployeeVM>();
+            List<MasterEmployee> entities = new List<MasterEmployee>();
 
             using (var response = await httpClient.GetAsync(address.link + request + "Master/"))
             {
                 string apiResponse = await response.Content.ReadAsStringAsync();
-                entities = JsonConvert.DeserializeObject<List<MasterEmployeeVM>>(apiResponse);
+                entities = JsonConvert.DeserializeObject<List<MasterEmployee>>(apiResponse);
             }
 
             return entities;
