@@ -17,16 +17,16 @@ namespace API.Repository.Data
             context = myContext;
         }
 
-        public IEnumerable TotalUniversity()
+        //This method to get university and process into chart
+        public ChartVM TotalUniversity()
         {
-            return context.Universities
-                .Select(u => new
-                {
-                    Labels = u.Name,
-                    Series = u.Educations.Count
-                });
+            string[] getLabels = context.Universities.Select(u => u.Name).OrderBy(u => u).ToArray();
+            int[] getSeries = context.Universities.Select(u => u.Educations.Count).OrderBy(u => u).ToArray();
+
+            return new ChartVM(getLabels, getSeries);
         }
 
+        //This method to get gender and process into chart
         public ChartVM TotalGender()
         {
             string[] labels = { Gender.Male.ToString(), Gender.Female.ToString() };
@@ -57,7 +57,7 @@ namespace API.Repository.Data
                     Email = eape.eap.ea.e.Email,
                     BirthDate = eape.eap.ea.e.BirthDate,
                     Salary = eape.eap.ea.e.Salary,
-                    Education_Id = eape.eap.p.EducationId,
+                    EducationId = eape.eap.p.EducationId,
                     GPA = eape.e.GPA,
                     Degree = eape.e.Degree,
                     UniversityName = u.Name
