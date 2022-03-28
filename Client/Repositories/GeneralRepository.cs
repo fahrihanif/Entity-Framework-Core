@@ -34,7 +34,7 @@ namespace Client.Repositories
 
         public HttpStatusCode Delete(TId id)
         {
-            var result = httpClient.DeleteAsync(request + id).Result;
+            var result = httpClient.DeleteAsync(request + "Delete?id=" + id).Result;
             return result.StatusCode;
         }
 
@@ -54,7 +54,7 @@ namespace Client.Repositories
         {
             TEntity entity = null;
 
-            using (var response = await httpClient.GetAsync(request + id))
+            using (var response = await httpClient.GetAsync(request + "Search?id=" + id))
             {
                 string apiResponse = await response.Content.ReadAsStringAsync();
                 entity = JsonConvert.DeserializeObject<TEntity>(apiResponse);
@@ -62,10 +62,10 @@ namespace Client.Repositories
             return entity;
         }
 
-        public HttpStatusCode Put(TId id, TEntity entity)
+        public HttpStatusCode Put(TEntity entity)
         {
             StringContent content = new StringContent(JsonConvert.SerializeObject(entity), Encoding.UTF8, "application/json");
-            var result = httpClient.PutAsync(request + id, content).Result;
+            var result = httpClient.PutAsync(address.link + request, content).Result;
             return result.StatusCode;
         }
 

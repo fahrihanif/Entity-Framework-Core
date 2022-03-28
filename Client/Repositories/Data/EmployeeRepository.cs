@@ -1,12 +1,15 @@
 ﻿using API.Models;
 using API.ViewModel;
 using Client.Base;
+using Client.Models;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Client.Repositories.Data
@@ -30,14 +33,60 @@ namespace Client.Repositories.Data
             //httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", _contextAccessor.HttpContext.Session.GetString("JWToken"));
         }
 
-        public async Task<List<RegisterVM>> GetAllProfile()
+        public HttpStatusCode Register(RegisterVM entity)
         {
-            List<RegisterVM> entities = new List<RegisterVM>();
+            StringContent content = new StringContent(JsonConvert.SerializeObject(entity), Encoding.UTF8, "application/json");
+            var result = httpClient.PostAsync(address.link + "Accounts/Register", content).Result;
+            return result.StatusCode;
+        }
+
+        public async Task<List<MasterEmployeeVM>> GetAllProfile()
+        {
+            List<MasterEmployeeVM> entities = new List<MasterEmployeeVM>();
 
             using (var response = await httpClient.GetAsync(address.link + request + "Master/"))
             {
                 string apiResponse = await response.Content.ReadAsStringAsync();
-                entities = JsonConvert.DeserializeObject<List<RegisterVM>>(apiResponse);
+                entities = JsonConvert.DeserializeObject<List<MasterEmployeeVM>>(apiResponse);
+            }
+
+            return entities;
+        }
+
+        public async Task<List<University>> GetAllUniversity()
+        {
+            List<University> entities = new List<University>();
+
+            using (var response = await httpClient.GetAsync(address.link + "Universities/"))
+            {
+                string apiResponse = await response.Content.ReadAsStringAsync();
+                entities = JsonConvert.DeserializeObject<List<University>>(apiResponse);
+            }
+
+            return entities;
+        }
+        
+        public async Task<ChartVM> GetChartGender()
+        {
+            ChartVM entities = null;
+
+            using (var response = await httpClient.GetAsync(address.link + request + "GenderCount/"))
+            {
+                string apiResponse = await response.Content.ReadAsStringAsync();
+                entities = JsonConvert.DeserializeObject<ChartVM>(apiResponse);
+            }
+
+            return entities;
+        }
+
+        public async Task<ChartVM> GetChartUniversity()
+        {
+            ChartVM entities = null;
+
+            using (var response = await httpClient.GetAsync(address.link + request + "UniversityCount/"))
+            {
+                string apiResponse = await response.Content.ReadAsStringAsync();
+                entities = JsonConvert.DeserializeObject<ChartVM>(apiResponse);
             }
 
             return entities;

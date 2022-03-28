@@ -1,6 +1,6 @@
 ﻿$.ajax({
     type: "GET",
-    url: "https://localhost:5001/API/Universities"
+    url: "../Employees/GetAllUniversity"
 }).done((result) => {
     let univ = `<option value="" disabled selected>Please select your university</option>`;
 
@@ -23,10 +23,11 @@ function Update(emp) {
     $.ajax({
         headers: {
             "Accept": "application/json",
-            "Content-Type": "application/json;charset=UTF-8"
+            "Content-Type": "application/json"
         },
         type: "PUT",
-        url: "https://localhost:5001/API/Employees",
+        url: "../Employees/Put",
+        contentType: "application/json; charset=utf-8",
         dataType: "json",
         data: JSON.stringify(emp)
     }).done((result) => {
@@ -62,7 +63,7 @@ function Delete(nik, name) {
         if (result.isConfirmed) {
             $.ajax({
                 type: "DELETE",
-                url: `https://localhost:5001/API/Employees/Delete?id=${nik}`
+                url: `../Employees/Delete/${nik}`
             }).done((result) => {
                 Swal.fire({
                     title: 'Deleted!',
@@ -88,7 +89,7 @@ function Delete(nik, name) {
 function GetEmployee(nik) {
     $.ajax({
         type: "GET",
-        url: `https://localhost:5001/API/Employees/Search?id=${nik}`
+        url: `../Employees/Get/${nik}`
     }).done((result) => {
         const emp = new Employee(
             result.nik,
@@ -198,7 +199,7 @@ function Register() {
                 "Content-Type": "application/json"
             },
             type: "POST",
-            url: "https://localhost:5001/API/Accounts/Register",
+            url: "../Employees/Register",
             dataType: "json",
             data: JSON.stringify(emp)
         }).done((result) => {
@@ -357,15 +358,8 @@ var colorPalette = ['#00D8B6', '#008FFB', '#FEB019', '#FF4560', '#775DD0'];
 
 $.ajax({
     type: "GET",
-    url: "/"
+    url: "../Employees/GetChartUniversity"
 }).done((result) => {
-    var labels = [];
-    var series = [];
-
-    $.each(result, (key, val) => {
-        labels.push(val.labels);
-        series.push(val.series)
-    })
 
     var options = {
         chart: {
@@ -373,10 +367,10 @@ $.ajax({
         },
         series: [{
             name: 'sales',
-            data: series
+            data: result.series
         }],
         xaxis: {
-            categories: labels
+            categories: result.labels
         }
     }
 
@@ -386,7 +380,7 @@ $.ajax({
 
 $.ajax({
     type: "GET",
-    url: "https://localhost:5001/API/Employees/GenderCount"
+    url: "../Employees/GetChartGender"
 }).done((result) => {
     var optionDonut = {
         series: result.series,
