@@ -7,6 +7,7 @@ using System.Linq;
 
 namespace API.Base
 {
+    [Authorize]
     public class BaseController<Entity, Repository, Key> : ControllerBase
         where Entity : class
         where Repository : IRepository<Entity, Key>
@@ -19,8 +20,7 @@ namespace API.Base
         }
 
         //Get Data
-        //[Authorize(Roles = "Director, Manager")]
-        [AllowAnonymous]
+        [Authorize(Roles = "Director, Manager")]
         [HttpGet]
         public ActionResult GetAll()
         {
@@ -77,7 +77,6 @@ namespace API.Base
         }
 
         //Update data from existing row in entity
-        [AllowAnonymous]
         [HttpPut]
         public virtual ActionResult Update(Entity entity)
         {
@@ -95,7 +94,6 @@ namespace API.Base
         }
 
         //Delete data from row in entity by primary key
-        //[Authorize]
         [AllowAnonymous]
         [HttpDelete("Delete")]
         [Route("")]

@@ -74,7 +74,7 @@ namespace API.Controllers
 
         //Get all return from method EmployeeRepostory Login and send result to postman
         [AllowAnonymous]
-        [HttpGet("Login")]
+        [HttpPost("Login")]
         public ActionResult Login(LoginVM login)
         {
             try

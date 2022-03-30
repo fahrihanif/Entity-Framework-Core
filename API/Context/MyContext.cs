@@ -29,7 +29,6 @@ namespace API.Context
                 .HasOne(p => p.Profiling)
                 .WithOne(e => e.Education)
                 .HasForeignKey<Profiling>(a => a.EducationId)
-                .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Employee>()

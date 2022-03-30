@@ -9,7 +9,7 @@ using System;
 namespace API.Controllers
 {
     //This class to implement BaseController in Employee
-    //[Authorize]
+    [Authorize]
     [Route("api/Employees")]
     [ApiController]
     public class EmployeesController : BaseController<Employee, EmployeeRepository, string>
@@ -74,7 +74,6 @@ namespace API.Controllers
         }
 
         //Update employee
-        //[Authorize]
         [AllowAnonymous]
         [HttpPut]
         public override ActionResult Update(Employee entity)
