@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -40,14 +41,14 @@ namespace Client.Repositories.Data
             return result.StatusCode;
         }
 
-        public async Task<List<MasterEmployee>> GetAllProfile()
+        public async Task<List<MasterEmployeeVM>> GetAllProfile()
         {
-            List<MasterEmployee> entities = new List<MasterEmployee>();
+            List<MasterEmployeeVM> entities = new List<MasterEmployeeVM>();
 
             using (var response = await httpClient.GetAsync(address.link + request + "Master/"))
             {
                 string apiResponse = await response.Content.ReadAsStringAsync();
-                entities = JsonConvert.DeserializeObject<List<MasterEmployee>>(apiResponse);
+                entities = JsonConvert.DeserializeObject<List<MasterEmployeeVM>>(apiResponse);
             }
 
             return entities;
